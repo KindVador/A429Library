@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# build directory
+/build
+
+# dependencies
+/googletest
+
+# macOS file
+.DS_Store
