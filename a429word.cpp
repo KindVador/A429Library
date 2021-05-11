@@ -167,7 +167,7 @@ std::string A429Word::toBinaryString()
 std::string A429Word::getLabelAsOctalString()
 {
     char buffer[4];
-    int n = sprintf(buffer, "%0o3", m_labelNumber);
+    int n = sprintf(buffer, "%03o", m_labelNumber);
     return std::string(buffer);
 }
 
