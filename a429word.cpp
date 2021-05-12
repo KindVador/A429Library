@@ -36,7 +36,7 @@ void A429Word::setRawValue(unsigned int rawValue)
     m_sdi = (m_rawValue & SDI_MASK) >> 8;
     m_payload = (m_rawValue & PAYLOAD_MASK) >> 10;
     m_ssm = (m_rawValue & SSM_MASK) >> 29;
-    m_parity = (bool) (m_rawValue & PARITY_MASK) >> 31;
+    m_parity = (m_rawValue & PARITY_MASK) >> 31;
 }
 
 unsigned short A429Word::labelNumber() const
@@ -193,7 +193,8 @@ double A429Word::getBnrValue(const bool &isSigned, const unsigned short &bitSign
 
 bool A429Word::isParityValid()
 {
-    if ((bool)(std::bitset<32>(m_rawValue).count() % 2) == m_parity) {
+    int nbBitSet = static_cast<int>(std::bitset<32>(m_rawValue).count());
+    if ((std::bitset<32>(m_rawValue & ~PARITY_MASK).count() % 2) == m_parity) {
         return false;
     } else {
         return true;

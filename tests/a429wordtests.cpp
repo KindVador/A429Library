@@ -48,14 +48,14 @@ TEST(A429WordTest, SetterRawValue) {
     EXPECT_EQ(wd.labelNumber(), 94);
     EXPECT_EQ(wd.sdi(), 2);
     EXPECT_EQ(wd.ssm(), 0);
-    //EXPECT_EQ(wd.parity(), 1);
+    EXPECT_EQ(wd.parity(), 1);
     // set a new raw value
     wd.setRawValue(std::stol("123417CD", nullptr, 16));
     EXPECT_EQ(wd.rawValue(), 305403853);
     EXPECT_EQ(wd.labelNumber(), 205);
     EXPECT_EQ(wd.sdi(), 3);
     EXPECT_EQ(wd.ssm(), 0);
-    //EXPECT_EQ(wd.parity(), 0);
+    EXPECT_EQ(wd.parity(), 0);
 }
 
 TEST(A429WordTest, GetterLabelNumber) {
