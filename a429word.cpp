@@ -145,7 +145,6 @@ bool A429Word::getBit(const unsigned short &bitNumber)
     }
     unsigned int mask = 1UL << (bitNumber -1 );
     bool bitValue = (m_rawValue & mask) >> (bitNumber -1 );
-    // qDebug() << bitNumber << " / " << mask << " / " << bitValue;
 
     return bitValue;
 }
@@ -172,20 +171,18 @@ std::string A429Word::getLabelAsOctalString()
 }
 
 double A429Word::getBnrValue(const bool &isSigned, const unsigned short &bitSign, const unsigned short &msbPos, const unsigned short &lsbPos, const double &resolution)
-{
-    int maskMsbLsb = ((1UL << msbPos) - 1) & ~ ((1UL << (lsbPos - 1)) - 1);
+{    
+    long long maskMsbLsb = ((1 << msbPos) - 1) & (~((1 << (lsbPos - 1)) - 1));
     if (isSigned) {
         if ((m_rawValue & (1 << (bitSign - 1))) >> (bitSign - 1) == 1) {
             // Negative input
             // (leading ‘1’ bit): Convert to decimal, getting a positive number, then subtract 2^numBits.
-            return (((m_rawValue & maskMsbLsb) >> (lsbPos - 1)) - (1UL << ((msbPos - lsbPos) + 1))) * resolution;
+            return (((m_rawValue & maskMsbLsb) >> (lsbPos - 1)) - (1 << ((msbPos - lsbPos) + 1))) * resolution;
         } else {
-
             // Non-negative input (leading ‘0’ bit): Simply convert to decimal.
             return ((m_rawValue & maskMsbLsb) >> (lsbPos - 1)) * resolution;
         }
     } else {
-
         // Non-negative input (leading ‘0’ bit): Simply convert to decimal.
         return ((m_rawValue & maskMsbLsb) >> (lsbPos - 1)) * resolution;
     }

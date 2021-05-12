@@ -264,9 +264,9 @@ TEST(A429WordTest, getBnrValue) {
     EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 29, 28, 12, 1.0), -1.0);
     EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 29, 27, 11, 1.0), -1.0);
     EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 28, 27, 11, 1.0), -1.0);
-    EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 12, 1.0), 262143.0);
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0), 262143.0);
     wd.setRawValue(std::stol("EFFFFFFF", nullptr, 16));
-    EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 12, 1.0), 262143.0);
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0), 262143.0);
 }
 
 TEST(A429WordTest, isParityValid) {
