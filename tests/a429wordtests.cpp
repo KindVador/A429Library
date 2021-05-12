@@ -1,5 +1,8 @@
 #include <gtest/gtest.h>
 #include "../a429word.hpp"
+#include <cstdio>
+#include <algorithm>
+#include <bitset>
 
 TEST(A429WordTest, DefaultConstructorTest) {
     A429Word wd = A429Word();
@@ -184,22 +187,74 @@ TEST(A429WordTest, getLabelAsBinaryString) {
 
 TEST(A429WordTest, getBit) {
     A429Word wd = A429Word("FFFFFFFF", true, 16);
-    FAIL();
+    // all bits set to 1
+    for (int i=1; i<33; ++i) {
+        EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
+    }
+    // all bits set to 0
+    wd.setRawValue(std::stol("00000000", nullptr, 16));
+    for (int i=1; i<33; ++i) {
+        EXPECT_FALSE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 0";
+    }
+    // alternate between 0 and 1
+    wd.setRawValue(std::stol("AAAAAAAA", nullptr, 16));
+    for (int i=1; i<33; ++i) {
+        if (i % 2 == 0) {
+            EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
+        } else {
+            EXPECT_FALSE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 0";
+        }
+    }
 }
 
 TEST(A429WordTest, setBit) {
     A429Word wd = A429Word("FFFFFFFF", true, 16);
-    FAIL();
+    // set all bits to 0
+    for (int i=1; i<33; ++i) {
+        wd.setBit(i, false);
+        EXPECT_FALSE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 0";
+    }
+    // set all bits to 1
+    for (int i=1; i<33; ++i) {
+        wd.setBit(i, true);
+        EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
+    }
 }
 
 TEST(A429WordTest, toBinaryString) {
     A429Word wd = A429Word("FFFFFFFF", true, 16);
-    FAIL();
+    EXPECT_EQ(wd.toBinaryString(), "11111111111111111111111111111111");
+    wd.setRawValue(std::stol("00000000", nullptr, 16));
+    EXPECT_EQ(wd.toBinaryString(), "00000000000000000000000000000000");
+    wd.setRawValue(std::stol("AAAAAAAA", nullptr, 16));
+    EXPECT_EQ(wd.toBinaryString(), "10101010101010101010101010101010");
+    wd.setRawValue(std::stol("55555555", nullptr, 16));
+    EXPECT_EQ(wd.toBinaryString(), "01010101010101010101010101010101");
 }
 
 TEST(A429WordTest, getLabelAsOctalString) {
+    // tests with label_number_msb_first option set to True
     A429Word wd = A429Word("FFFFFFFF", true, 16);
-    FAIL();
+    for (int i = 1; i < 256; ++i) {
+        wd.setLabelNumber(i);
+        std::string labelString = std::bitset<8>(i).to_string();
+        std::reverse(labelString.begin(), labelString.end());
+        unsigned short labelInt = std::stoi(labelString, nullptr, 2);
+        char buffer[4];
+        int n = sprintf(buffer, "%03o", labelInt);
+        EXPECT_EQ(wd.getLabelAsOctalString(), std::string(buffer));
+    }
+
+    // tests with label_number_msb_first option set to False
+    wd = A429Word("FFFFFFFF", false, 16);
+    for (int i = 1; i < 256; ++i) {
+        wd.setLabelNumber(i);
+        std::string labelString = std::bitset<8>(i).to_string();
+        unsigned short labelInt = std::stoi(labelString, nullptr, 2);
+        char buffer[4];
+        int n = sprintf(buffer, "%03o", labelInt);
+        EXPECT_EQ(wd.getLabelAsOctalString(), std::string(buffer));
+    }
 }
 
 TEST(A429WordTest, getBnrValue) {
