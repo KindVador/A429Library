@@ -259,15 +259,33 @@ TEST(A429WordTest, getLabelAsOctalString) {
 
 TEST(A429WordTest, getBnrValue) {
     A429Word wd = A429Word("FFFFFFFF", true, 16);
-    FAIL();
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 29, 28, 11, 1.0), -1.0);
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 29, 28, 11, 0.5), -0.5);
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 29, 28, 12, 1.0), -1.0);
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 29, 27, 11, 1.0), -1.0);
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 28, 27, 11, 1.0), -1.0);
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 12, 1.0), 262143.0);
+    wd.setRawValue(std::stol("EFFFFFFF", nullptr, 16));
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 12, 1.0), 262143.0);
 }
 
 TEST(A429WordTest, isParityValid) {
-    A429Word wd = A429Word("FFFFFFFF", true, 16);
-    FAIL();
+    A429Word wd = A429Word("ABCD2234", true, 16);
+    EXPECT_TRUE(wd.isParityValid());
+    wd.setParity(false);
+    EXPECT_FALSE(wd.isParityValid());
+    wd.setRawValue(std::stol("123417CD", nullptr, 16));
+    EXPECT_FALSE(wd.isParityValid());
+    wd.setParity(true);
+    EXPECT_TRUE(wd.isParityValid());
 }
 
 TEST(A429WordTest, toggleBit) {
     A429Word wd = A429Word("FFFFFFFF", true, 16);
-    FAIL();
+    for (int i = 1; i < 33; ++i) {
+        wd.toggleBit(i);
+        EXPECT_FALSE(wd.getBit(i));
+        wd.toggleBit(i);
+        EXPECT_TRUE(wd.getBit(i));
+    }
 }
