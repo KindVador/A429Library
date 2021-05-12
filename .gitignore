@@ -39,3 +39,6 @@
 
 # macOS file
 .DS_Store
+
+# IDE
+/.vscode
