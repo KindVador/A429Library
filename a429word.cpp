@@ -16,7 +16,7 @@ A429Word::A429Word(unsigned int value, bool labelNumberMsbFirst)
 
 A429Word::A429Word(std::string value, bool labelNumberMsbFirst, int base)
 {
-    setRawValue(std::stoul(value,nullptr,16));
+    setRawValue(std::stoul(value,nullptr,base));
     setLabelNumberMsbFirst(labelNumberMsbFirst);
 }
 
