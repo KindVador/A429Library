@@ -180,7 +180,7 @@ TEST(A429WordTest, getLabelAsBinaryString) {
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "10101100") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 10101100";
     EXPECT_EQ(wd.getLabelAsBinaryString(false), "00110101") << "getLabelAsBinaryString(false) returned " << wd.getLabelAsBinaryString(false) << " instead of 00110101";
     // CASE LABEL 256 AND 165
-    wd = A429Word("FFFFFF75", false, 16);
+    wd = A429Word("FFFFFF75", true, 16);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "01110101") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 01110101";
     EXPECT_EQ(wd.getLabelAsBinaryString(false), "10101110") << "getLabelAsBinaryString(false) returned " << wd.getLabelAsBinaryString(false) << " instead of 10101110";
 }
