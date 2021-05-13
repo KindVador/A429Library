@@ -165,9 +165,19 @@ std::string A429Word::toBinaryString()
 
 std::string A429Word::getLabelAsOctalString()
 {
-    char buffer[4];
-    int n = sprintf(buffer, "%03o", m_labelNumber);
-    return std::string(buffer);
+    if (m_labelNumberMsbFirst) {
+        std::string labelString = std::bitset<8>(m_labelNumber).to_string();
+        std::reverse(labelString.begin(), labelString.end());
+        unsigned short labelInt = std::stoi(labelString, nullptr, 2);
+        char buffer[4];
+        int n = sprintf(buffer, "%03o", labelInt);
+        return std::string(buffer);
+    } else {
+        char buffer[4];
+        int n = sprintf(buffer, "%03o", m_labelNumber);
+        return std::string(buffer);
+    }
+    
 }
 
 double A429Word::getBnrValue(const bool &isSigned, const unsigned short &bitSign, const unsigned short &msbPos, const unsigned short &lsbPos, const double &resolution)

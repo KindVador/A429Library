@@ -235,7 +235,7 @@ TEST(A429WordTest, toBinaryString) {
 TEST(A429WordTest, getLabelAsOctalString) {
     // tests with label_number_msb_first option set to True
     A429Word wd = A429Word("FFFFFFFF", true, 16);
-    for (int i = 1; i < 256; ++i) {
+    for (int i = 0; i < 256; ++i) {
         wd.setLabelNumber(i);
         std::string labelString = std::bitset<8>(i).to_string();
         std::reverse(labelString.begin(), labelString.end());
@@ -247,7 +247,7 @@ TEST(A429WordTest, getLabelAsOctalString) {
 
     // tests with label_number_msb_first option set to False
     wd = A429Word("FFFFFFFF", false, 16);
-    for (int i = 1; i < 256; ++i) {
+    for (int i = 0; i < 256; ++i) {
         wd.setLabelNumber(i);
         std::string labelString = std::bitset<8>(i).to_string();
         unsigned short labelInt = std::stoi(labelString, nullptr, 2);
