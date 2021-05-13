@@ -56,6 +56,9 @@ TEST(A429WordTest, SetterRawValue) {
     EXPECT_EQ(wd.sdi(), 3);
     EXPECT_EQ(wd.ssm(), 0);
     EXPECT_EQ(wd.parity(), 0);
+    // out_of_range exception
+    // This exception cannot be tested because the compiler performs an implicitly conversion from long to int which changes the value
+    // EXPECT_THROW(wd.setRawValue(4294967296), std::out_of_range);
 }
 
 TEST(A429WordTest, GetterLabelNumber) {
@@ -70,6 +73,8 @@ TEST(A429WordTest, SetterLabelNumber) {
         wd.setLabelNumber(i);
         EXPECT_EQ(wd.labelNumber(), i);
     }
+    // out_of_range exception
+    EXPECT_THROW(wd.setLabelNumber(256), std::out_of_range);
 }
 
 TEST(A429WordTest, GetterSdi) {
@@ -90,6 +95,8 @@ TEST(A429WordTest, SetterSdi) {
         wd.setSdi(i);
         EXPECT_EQ(wd.sdi(), i);
     }
+    // out_of_range exception
+    EXPECT_THROW(wd.setSdi(4), std::out_of_range);
 }
 
 TEST(A429WordTest, GetterPayload) {
@@ -112,6 +119,8 @@ TEST(A429WordTest, SetterPayload) {
         wd.setPayload(i);
         EXPECT_EQ(wd.payload(), i);
     }
+    // out_of_range exception
+    EXPECT_THROW(wd.setPayload(524288), std::out_of_range);
 }
 
 TEST(A429WordTest, GetterSsm) {
@@ -132,6 +141,8 @@ TEST(A429WordTest, SetterSsm) {
         wd.setSsm(i);
         EXPECT_EQ(wd.ssm(), i);
     }
+    // out_of_range exception
+    EXPECT_THROW(wd.setSsm(256), std::out_of_range);
 }
 
 TEST(A429WordTest, GetterParity) {
@@ -205,6 +216,8 @@ TEST(A429WordTest, getBit) {
             EXPECT_FALSE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 0";
         }
     }
+    // out_of_range exception
+    EXPECT_THROW(wd.getBit(33), std::out_of_range);
 }
 
 TEST(A429WordTest, setBit) {
@@ -219,6 +232,8 @@ TEST(A429WordTest, setBit) {
         wd.setBit(i, true);
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
     }
+    // out_of_range exception
+    EXPECT_THROW(wd.setBit(33, true), std::out_of_range);
 }
 
 TEST(A429WordTest, toBinaryString) {
@@ -288,4 +303,6 @@ TEST(A429WordTest, toggleBit) {
         wd.toggleBit(i);
         EXPECT_TRUE(wd.getBit(i));
     }
+    // out_of_range exception
+    EXPECT_THROW(wd.toggleBit(33), std::out_of_range);
 }
