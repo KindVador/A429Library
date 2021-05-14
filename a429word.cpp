@@ -8,7 +8,7 @@ A429Word::A429Word()
 
 }
 
-A429Word::A429Word(unsigned int value, bool labelNumberMsbFirst)
+A429Word::A429Word(uint value, bool labelNumberMsbFirst)
 {
     setRawValue(value);
     setLabelNumberMsbFirst(labelNumberMsbFirst);
@@ -20,12 +20,12 @@ A429Word::A429Word(std::string value, bool labelNumberMsbFirst, int base)
     setLabelNumberMsbFirst(labelNumberMsbFirst);
 }
 
-unsigned int A429Word::rawValue() const
+uint A429Word::rawValue() const
 {
     return m_rawValue;
 }
 
-void A429Word::setRawValue(unsigned int rawValue)
+void A429Word::setRawValue(uint rawValue)
 {
     if (rawValue > 4294967295UL) {
         throw std::out_of_range("Raw value should be lower than 4294967295 (decimal base)");
@@ -39,12 +39,12 @@ void A429Word::setRawValue(unsigned int rawValue)
     m_parity = (m_rawValue & PARITY_MASK) >> 31;
 }
 
-unsigned short A429Word::labelNumber() const
+ushort A429Word::labelNumber() const
 {
     return m_labelNumber;
 }
 
-void A429Word::setLabelNumber(unsigned short labelNumber)
+void A429Word::setLabelNumber(ushort labelNumber)
 {
     if (labelNumber > 255UL) {
         throw std::out_of_range("Label Number should be lower than 255 (decimal base)");     // value must be between 0 and 255
@@ -54,12 +54,12 @@ void A429Word::setLabelNumber(unsigned short labelNumber)
     m_rawValue = m_rawValue & m_labelNumber;
 }
 
-unsigned short A429Word::sdi() const
+ushort A429Word::sdi() const
 {
     return m_sdi;
 }
 
-void A429Word::setSdi(unsigned short sdi)
+void A429Word::setSdi(ushort sdi)
 {
     if (sdi > 3UL) {
         throw std::out_of_range("SDI value should be lower than 3 (decimal base)");
@@ -69,12 +69,12 @@ void A429Word::setSdi(unsigned short sdi)
     m_rawValue = m_rawValue & m_sdi;
 }
 
-unsigned int A429Word::payload() const
+uint A429Word::payload() const
 {
     return m_payload;
 }
 
-void A429Word::setPayload(unsigned int payload)
+void A429Word::setPayload(uint payload)
 {
     if (payload > 524287UL) {
         throw std::out_of_range("Payload value should be lower than 524287 (decimal base)");
@@ -84,12 +84,12 @@ void A429Word::setPayload(unsigned int payload)
     m_rawValue = m_rawValue & m_payload;
 }
 
-unsigned short A429Word::ssm() const
+ushort A429Word::ssm() const
 {
     return m_ssm;
 }
 
-void A429Word::setSsm(unsigned short ssm)
+void A429Word::setSsm(ushort ssm)
 {
     if (ssm > 3UL) {
         throw std::out_of_range("Payload value should be lower than 524287 (decimal base)");
@@ -138,23 +138,23 @@ std::string A429Word::getLabelAsBinaryString(const bool &msbFirst)
     }
 }
 
-bool A429Word::getBit(const unsigned short &bitNumber)
+bool A429Word::getBit(const ushort &bitNumber)
 {
     if (bitNumber > 32) {
         throw std::out_of_range("Bit number value should be lower than 33 (decimal base)");
     }
-    unsigned int mask = 1UL << (bitNumber -1 );
+    uint mask = 1UL << (bitNumber -1 );
     bool bitValue = (m_rawValue & mask) >> (bitNumber -1 );
 
     return bitValue;
 }
 
-void A429Word::setBit(const unsigned short &bitNumber, const bool &value)
+void A429Word::setBit(const ushort &bitNumber, const bool &value)
 {
     if (bitNumber > 32) {
         throw std::out_of_range("Bit number value should be lower than 33 (decimal base)");
     }
-    unsigned int mask = 4294967295UL ^ (1 << (bitNumber - 1));
+    uint mask = 4294967295UL ^ (1 << (bitNumber - 1));
     m_rawValue = (m_rawValue & mask) | (value << (bitNumber - 1));
 }
 
@@ -168,7 +168,7 @@ std::string A429Word::getLabelAsOctalString()
     if (m_labelNumberMsbFirst) {
         std::string labelString = std::bitset<8>(m_labelNumber).to_string();
         std::reverse(labelString.begin(), labelString.end());
-        unsigned short labelInt = std::stoi(labelString, nullptr, 2);
+        ushort labelInt = std::stoi(labelString, nullptr, 2);
         char buffer[4];
         int n = sprintf(buffer, "%03o", labelInt);
         return std::string(buffer);
@@ -180,7 +180,7 @@ std::string A429Word::getLabelAsOctalString()
     
 }
 
-double A429Word::getBnrValue(const bool &isSigned, const unsigned short &bitSign, const unsigned short &msbPos, const unsigned short &lsbPos, const double &resolution)
+double A429Word::getBnrValue(const bool &isSigned, const ushort &bitSign, const ushort &msbPos, const ushort &lsbPos, const double &resolution)
 {    
     long long maskMsbLsb = ((1 << msbPos) - 1) & (~((1 << (lsbPos - 1)) - 1));
     if (isSigned) {
@@ -208,7 +208,7 @@ bool A429Word::isParityValid()
     }
 }
 
-void A429Word::toggleBit(const unsigned short &bitNumber)
+void A429Word::toggleBit(const ushort &bitNumber)
 {
     if (bitNumber > 32) {
         throw std::out_of_range("Bit number value should be lower than 33 (decimal base)");
