@@ -20,6 +20,11 @@ A429Word::A429Word(std::string value, bool labelNumberMsbFirst, int base)
     setLabelNumberMsbFirst(labelNumberMsbFirst);
 }
 
+A429Word::~A429Word()
+{
+
+}
+
 uint A429Word::rawValue() const
 {
     return m_rawValue;
@@ -170,11 +175,11 @@ std::string A429Word::getLabelAsOctalString()
         std::reverse(labelString.begin(), labelString.end());
         ushort labelInt = std::stoi(labelString, nullptr, 2);
         char buffer[4];
-        int n = sprintf(buffer, "%03o", labelInt);
+        sprintf(buffer, "%03o", labelInt);
         return std::string(buffer);
     } else {
         char buffer[4];
-        int n = sprintf(buffer, "%03o", m_labelNumber);
+        sprintf(buffer, "%03o", m_labelNumber);
         return std::string(buffer);
     }
     
@@ -200,7 +205,6 @@ double A429Word::getBnrValue(const bool &isSigned, const ushort &bitSign, const 
 
 bool A429Word::isParityValid()
 {
-    int nbBitSet = static_cast<int>(std::bitset<32>(m_rawValue).count());
     if ((std::bitset<32>(m_rawValue & ~PARITY_MASK).count() % 2) == m_parity) {
         return false;
     } else {

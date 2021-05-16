@@ -22,6 +22,9 @@ public:
     A429Word(uint value, bool labelNumberMsbFirst=true);
     A429Word(std::string value, bool labelNumberMsbFirst=true, int base=16);
 
+    // DESTRUCTOR
+    virtual ~A429Word();
+
     // GETTERS & SETTERS
     uint rawValue() const;
     void setRawValue(uint rawValue);
