@@ -313,14 +313,24 @@ TEST(A429WordTest, getBnrValue) {
 }
 
 TEST(A429WordTest, isParityValid) {
-    A429Word wd = A429Word("ABCD2234", true, 16);
-    EXPECT_TRUE(wd.isParityValid());
-    wd.setParity(false);
-    EXPECT_FALSE(wd.isParityValid());
-    wd.setRawValue(std::stol("123417CD", nullptr, 16));
-    EXPECT_FALSE(wd.isParityValid());
-    wd.setParity(true);
-    EXPECT_TRUE(wd.isParityValid());
+    // tests with ODD parity
+    A429Word wdOdd = A429Word("ABCD2234", true, 16);
+    EXPECT_TRUE(wdOdd.isParityValid());
+    wdOdd.setParity(false);
+    EXPECT_FALSE(wdOdd.isParityValid());
+    wdOdd.setRawValue(std::stol("123417CD", nullptr, 16));
+    EXPECT_FALSE(wdOdd.isParityValid());
+    wdOdd.setParity(true);
+    EXPECT_TRUE(wdOdd.isParityValid());
+    // tests with EVEN parity
+    A429Word wdEven = A429Word("ABCD2234", true, 16, false);
+    EXPECT_FALSE(wdEven.isParityValid());
+    wdEven.setParity(false);
+    EXPECT_TRUE(wdEven.isParityValid());
+    wdEven.setRawValue(std::stol("123417CD", nullptr, 16));
+    EXPECT_TRUE(wdEven.isParityValid());
+    wdEven.setParity(true);
+    EXPECT_FALSE(wdEven.isParityValid());
 }
 
 TEST(A429WordTest, toggleBit) {

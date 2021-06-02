@@ -8,16 +8,18 @@ A429Word::A429Word()
 
 }
 
-A429Word::A429Word(uint value, bool labelNumberMsbFirst)
+A429Word::A429Word(uint value, bool labelNumberMsbFirst, bool oddParity)
 {
     setRawValue(value);
     setLabelNumberMsbFirst(labelNumberMsbFirst);
+    m_isOddParity = oddParity;
 }
 
-A429Word::A429Word(std::string value, bool labelNumberMsbFirst, int base)
+A429Word::A429Word(std::string value, bool labelNumberMsbFirst, int base, bool oddParity)
 {
     setRawValue(std::stoul(value,nullptr,base));
     setLabelNumberMsbFirst(labelNumberMsbFirst);
+    m_isOddParity = oddParity;
 }
 
 A429Word::~A429Word()
@@ -205,10 +207,10 @@ double A429Word::getBnrValue(const bool &isSigned, const ushort &bitSign, const 
 
 bool A429Word::isParityValid()
 {
-    if ((std::bitset<32>(m_rawValue & ~PARITY_MASK).count() % 2) == m_parity) {
-        return false;
-    } else {
+    if ((std::bitset<32>(m_rawValue).count() % 2) == m_isOddParity) {
         return true;
+    } else {
+        return false;
     }
 }
 

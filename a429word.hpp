@@ -8,8 +8,6 @@
 #define PAYLOAD_MASK 536869888UL
 #define SSM_MASK 1610612736UL
 #define PARITY_MASK 2147483648UL
-#define EVEN_PARITY 0
-#define ODD_PARITY 1
 
 using uint = unsigned int;
 using ushort = unsigned short;
@@ -19,8 +17,8 @@ class A429Word
 public:
     // CONSTRUCTORS
     A429Word();
-    A429Word(uint value, bool labelNumberMsbFirst=true);
-    A429Word(std::string value, bool labelNumberMsbFirst=true, int base=16);
+    A429Word(uint value, bool labelNumberMsbFirst=true, bool oddParity=true);
+    A429Word(std::string value, bool labelNumberMsbFirst=true, int base=16, bool oddParity=true);
 
     // DESTRUCTOR
     virtual ~A429Word();
@@ -65,6 +63,7 @@ private:
     ushort m_ssm = 0;
     bool m_parity = 0;
     bool m_labelNumberMsbFirst = true;
+    bool m_isOddParity = true;
 };
 
 #endif // A429WORD_HPP
