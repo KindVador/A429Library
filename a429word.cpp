@@ -132,6 +132,16 @@ void A429Word::setLabelNumberMsbFirst(bool value)
     m_labelNumberMsbFirst = value;
 }
 
+bool A429Word::isOddParity() const
+{
+    return m_isOddParity;
+}
+
+void A429Word::setIsOddParity(const bool value)
+{
+    m_isOddParity = value;
+}
+
 std::string A429Word::getLabelAsBinaryString(const bool &msbFirst)
 {
     if (m_labelNumberMsbFirst && msbFirst) {

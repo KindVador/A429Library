@@ -45,6 +45,9 @@ public:
     bool labelNumberMsbFirst() const;
     void setLabelNumberMsbFirst(bool value);
 
+    bool isOddParity() const;
+    void setIsOddParity(const bool value);
+
     // METHODS
     std::string getLabelAsBinaryString(const bool &msbFirst);
     bool getBit(const ushort &bitNumber);

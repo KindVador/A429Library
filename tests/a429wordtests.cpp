@@ -344,3 +344,21 @@ TEST(A429WordTest, toggleBit) {
     // out_of_range exception
     EXPECT_THROW(wd.toggleBit(33), std::out_of_range);
 }
+
+TEST(A429WordTest, GetterIsOddParity) {
+    A429Word wdOddParity = A429Word("FFFFFFFF", true, 16, true);
+    EXPECT_TRUE(wdOddParity.isOddParity());
+    A429Word wdEvenParity = A429Word("FFFFFFFF", true, 16, false);
+    EXPECT_FALSE(wdEvenParity.isOddParity());
+}
+
+TEST(A429WordTest, SetterIsOddParity) {
+    A429Word wdOddParity = A429Word("FFFFFFFF", true, 16, true);
+    EXPECT_TRUE(wdOddParity.isOddParity());
+    wdOddParity.setIsOddParity(false);
+    EXPECT_FALSE(wdOddParity.isOddParity());
+    A429Word wdEvenParity = A429Word("FFFFFFFF", true, 16, false);
+    EXPECT_FALSE(wdOddParity.isOddParity());
+    wdEvenParity.setIsOddParity(true);
+    EXPECT_TRUE(wdEvenParity.isOddParity());
+}
