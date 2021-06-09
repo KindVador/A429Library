@@ -232,3 +232,15 @@ void A429Word::toggleBit(const ushort &bitNumber)
     m_rawValue ^=  (1UL << (bitNumber - 1));
     setRawValue(m_rawValue);
 }
+
+uint A429Word::getBitRange(const ushort& msbPos, const ushort& lsbPos)
+{
+    if (msbPos > 32 || lsbPos > 32) {
+        throw std::out_of_range("MSB or LSB position should be lower than 33 (decimal base)");
+    } else if (msbPos < lsbPos)
+    {
+        throw std::range_error("MSB position should be greate ot equal to LSB position");
+    }
+    long long maskMsbLsb = ((1 << msbPos) - 1) & (~((1 << (lsbPos - 1)) - 1));
+    return (m_rawValue & maskMsbLsb) >> (lsbPos - 1);
+}

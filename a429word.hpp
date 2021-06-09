@@ -57,6 +57,7 @@ public:
     double getBnrValue(const bool &isSigned, const ushort &bitSign, const ushort &msbPos, const ushort &lsbPos, const double &resolution);
     bool isParityValid();
     void toggleBit(const ushort& bitNumber);
+    uint getBitRange(const ushort& msbPos, const ushort& lsbPos);
 
 private:
     uint m_rawValue = 0;

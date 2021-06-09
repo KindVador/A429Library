@@ -362,3 +362,19 @@ TEST(A429WordTest, SetterIsOddParity) {
     wdEvenParity.setIsOddParity(true);
     EXPECT_TRUE(wdEvenParity.isOddParity());
 }
+
+TEST(A429WordTest, getBitRange) {
+    A429Word wd = A429Word("7C3C3CF0", true, 16, true);
+    EXPECT_EQ(wd.getBitRange(14, 11), 15);
+    EXPECT_EQ(wd.getBitRange(18, 15), 0);
+    EXPECT_EQ(wd.getBitRange(22, 19), 15);
+    EXPECT_EQ(wd.getBitRange(28, 23), 48);
+    EXPECT_EQ(wd.getBitRange(29, 11), 462607);
+    EXPECT_EQ(wd.getBitRange(29, 29), 1);
+    EXPECT_EQ(wd.getBitRange(26, 26), 0);
+    // out_of_range exception
+    EXPECT_THROW(wd.getBitRange(33, 12), std::out_of_range);
+    EXPECT_THROW(wd.getBitRange(33, 33), std::out_of_range);
+    // range_error exception
+    EXPECT_THROW(wd.getBitRange(14, 28), std::range_error);
+}
