@@ -35,8 +35,7 @@ public:
     void setResolution(const double value);
 
     // METHODS
-    double getIndustrialValue() const;
-    void encode(const double value);
+    double getIndustrialValue();
 
 private:
     bool m_isSigned = true;

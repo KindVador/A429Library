@@ -77,3 +77,8 @@ void A429BnrWord::setResolution(const double value)
 {
     m_resolution = value;
 }
+
+double A429BnrWord::getIndustrialValue()
+{
+    return getBnrValue(m_isSigned, m_signBitPosition, m_msbBitPosition, m_lsbBitPosition, m_resolution);
+}

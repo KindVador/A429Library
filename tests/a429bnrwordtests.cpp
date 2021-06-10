@@ -141,3 +141,20 @@ TEST(A429BnrWordTest, SetterResolution) {
     wd.setResolution(1.0);
     EXPECT_EQ(wd.resolution(), 1.0);
 }
+
+TEST(A429BnrWordTest, getIndustrialValue) {
+    A429BnrWord wd = A429BnrWord("FFFFFFFF", true, 16, true, 29, 28, 11, 1.0);
+    EXPECT_DOUBLE_EQ(wd.getIndustrialValue(), -1.0);
+    wd = A429BnrWord("FFFFFFFF", true, 16, true, 29, 28, 11, 0.5);
+    EXPECT_DOUBLE_EQ(wd.getIndustrialValue(), -0.5);
+    wd = A429BnrWord("FFFFFFFF", true, 16, true, 29, 28, 12, 1.0);
+    EXPECT_DOUBLE_EQ(wd.getIndustrialValue(), -1.0);
+    wd = A429BnrWord("FFFFFFFF", true, 16, true, 29, 27, 11, 1.0);
+    EXPECT_DOUBLE_EQ(wd.getIndustrialValue(), -1.0);
+    wd = A429BnrWord("FFFFFFFF", true, 16, true, 28, 27, 11, 1.0);
+    EXPECT_DOUBLE_EQ(wd.getIndustrialValue(), -1.0);
+    wd = A429BnrWord("FFFFFFFF", true, 16, false, 29, 28, 11, 1.0);
+    EXPECT_DOUBLE_EQ(wd.getIndustrialValue(), 262143.0);
+    wd.setRawValue(std::stol("EFFFFFFF", nullptr, 16));
+    EXPECT_DOUBLE_EQ(wd.getIndustrialValue(), 262143.0);
+}
