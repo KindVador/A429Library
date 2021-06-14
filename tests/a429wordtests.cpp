@@ -64,12 +64,12 @@ TEST(A429WordTest, StringConstructorTest) {
 
 TEST(A429WordTest, GetterRawValue) {
     A429Word wd = A429Word("ABCD2234", true, 16);
-    EXPECT_EQ(wd.rawValue(), std::stol("ABCD2234", nullptr, 16));
+    EXPECT_EQ(wd.rawValue(), std::stoul("ABCD2234", nullptr, 16));
 }
 
 TEST(A429WordTest, SetterRawValue) {
     A429Word wd = A429Word("ABCD2234", true, 16);
-    EXPECT_EQ(wd.rawValue(), std::stol("ABCD2234", nullptr, 16));
+    EXPECT_EQ(wd.rawValue(), std::stoul("ABCD2234", nullptr, 16));
     // set a new raw value
     wd.setRawValue(2249354846);
     EXPECT_EQ(wd.rawValue(), 2249354846);
@@ -78,7 +78,7 @@ TEST(A429WordTest, SetterRawValue) {
     EXPECT_EQ(wd.ssm(), 0);
     EXPECT_EQ(wd.parity(), 1);
     // set a new raw value
-    wd.setRawValue(std::stol("123417CD", nullptr, 16));
+    wd.setRawValue(std::stoul("123417CD", nullptr, 16));
     EXPECT_EQ(wd.rawValue(), 305403853);
     EXPECT_EQ(wd.labelNumber(), 205);
     EXPECT_EQ(wd.sdi(), 3);
@@ -108,11 +108,11 @@ TEST(A429WordTest, SetterLabelNumber) {
 TEST(A429WordTest, GetterSdi) {
     A429Word wd = A429Word("FFFFFFFF", true, 16);
     EXPECT_EQ(wd.sdi(), 3);
-    wd.setRawValue(std::stol("FFFFFEFF", nullptr, 16));
+    wd.setRawValue(std::stoul("FFFFFEFF", nullptr, 16));
     EXPECT_EQ(wd.sdi(), 2);
-    wd.setRawValue(std::stol("FFFFFDFF", nullptr, 16));
+    wd.setRawValue(std::stoul("FFFFFDFF", nullptr, 16));
     EXPECT_EQ(wd.sdi(), 1);
-    wd.setRawValue(std::stol("FFFFFCFF", nullptr, 16));
+    wd.setRawValue(std::stoul("FFFFFCFF", nullptr, 16));
     EXPECT_EQ(wd.sdi(), 0);
 }
 
@@ -154,11 +154,11 @@ TEST(A429WordTest, SetterPayload) {
 TEST(A429WordTest, GetterSsm) {
     A429Word wd = A429Word("FFFFFFFF", true, 16);
     EXPECT_EQ(wd.ssm(), 3);
-    wd.setRawValue(std::stol("DFFFFFFF", nullptr, 16));
+    wd.setRawValue(std::stoul("DFFFFFFF", nullptr, 16));
     EXPECT_EQ(wd.ssm(), 2);
-    wd.setRawValue(std::stol("BFFFFFFF", nullptr, 16));
+    wd.setRawValue(std::stoul("BFFFFFFF", nullptr, 16));
     EXPECT_EQ(wd.ssm(), 1);
-    wd.setRawValue(std::stol("9FFFFFFF", nullptr, 16));
+    wd.setRawValue(std::stoul("9FFFFFFF", nullptr, 16));
     EXPECT_EQ(wd.ssm(), 0);
 }
 
@@ -176,7 +176,7 @@ TEST(A429WordTest, SetterSsm) {
 TEST(A429WordTest, GetterParity) {
     A429Word wd = A429Word("FFFFFFFF", true, 16);
     EXPECT_EQ(wd.parity(), 1);
-    wd.setRawValue(std::stol("7FFFFFFF", nullptr, 16));
+    wd.setRawValue(std::stoul("7FFFFFFF", nullptr, 16));
     EXPECT_EQ(wd.parity(), 0);
 }
 
@@ -231,12 +231,12 @@ TEST(A429WordTest, getBit) {
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
     }
     // all bits set to 0
-    wd.setRawValue(std::stol("00000000", nullptr, 16));
+    wd.setRawValue(std::stoul("00000000", nullptr, 16));
     for (int i=1; i<33; ++i) {
         EXPECT_FALSE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 0";
     }
     // alternate between 0 and 1
-    wd.setRawValue(std::stol("AAAAAAAA", nullptr, 16));
+    wd.setRawValue(std::stoul("AAAAAAAA", nullptr, 16));
     for (int i=1; i<33; ++i) {
         if (i % 2 == 0) {
             EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
@@ -267,11 +267,11 @@ TEST(A429WordTest, setBit) {
 TEST(A429WordTest, toBinaryString) {
     A429Word wd = A429Word("FFFFFFFF", true, 16);
     EXPECT_EQ(wd.toBinaryString(), "11111111111111111111111111111111");
-    wd.setRawValue(std::stol("00000000", nullptr, 16));
+    wd.setRawValue(std::stoul("00000000", nullptr, 16));
     EXPECT_EQ(wd.toBinaryString(), "00000000000000000000000000000000");
-    wd.setRawValue(std::stol("AAAAAAAA", nullptr, 16));
+    wd.setRawValue(std::stoul("AAAAAAAA", nullptr, 16));
     EXPECT_EQ(wd.toBinaryString(), "10101010101010101010101010101010");
-    wd.setRawValue(std::stol("55555555", nullptr, 16));
+    wd.setRawValue(std::stoul("55555555", nullptr, 16));
     EXPECT_EQ(wd.toBinaryString(), "01010101010101010101010101010101");
 }
 
@@ -308,7 +308,7 @@ TEST(A429WordTest, getBnrValue) {
     EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 29, 27, 11, 1.0), -1.0);
     EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 28, 27, 11, 1.0), -1.0);
     EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0), 262143.0);
-    wd.setRawValue(std::stol("EFFFFFFF", nullptr, 16));
+    wd.setRawValue(std::stoul("EFFFFFFF", nullptr, 16));
     EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0), 262143.0);
 }
 
@@ -318,7 +318,7 @@ TEST(A429WordTest, isParityValid) {
     EXPECT_TRUE(wdOdd.isParityValid());
     wdOdd.setParity(false);
     EXPECT_FALSE(wdOdd.isParityValid());
-    wdOdd.setRawValue(std::stol("123417CD", nullptr, 16));
+    wdOdd.setRawValue(std::stoul("123417CD", nullptr, 16));
     EXPECT_FALSE(wdOdd.isParityValid());
     wdOdd.setParity(true);
     EXPECT_TRUE(wdOdd.isParityValid());
@@ -327,7 +327,7 @@ TEST(A429WordTest, isParityValid) {
     EXPECT_FALSE(wdEven.isParityValid());
     wdEven.setParity(false);
     EXPECT_TRUE(wdEven.isParityValid());
-    wdEven.setRawValue(std::stol("123417CD", nullptr, 16));
+    wdEven.setRawValue(std::stoul("123417CD", nullptr, 16));
     EXPECT_TRUE(wdEven.isParityValid());
     wdEven.setParity(true);
     EXPECT_FALSE(wdEven.isParityValid());

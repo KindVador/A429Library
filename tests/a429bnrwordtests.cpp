@@ -155,6 +155,6 @@ TEST(A429BnrWordTest, getIndustrialValue) {
     EXPECT_DOUBLE_EQ(wd.getIndustrialValue(), -1.0);
     wd = A429BnrWord("FFFFFFFF", true, 16, false, 29, 28, 11, 1.0);
     EXPECT_DOUBLE_EQ(wd.getIndustrialValue(), 262143.0);
-    wd.setRawValue(std::stol("EFFFFFFF", nullptr, 16));
+    wd.setRawValue(std::stoul("EFFFFFFF", nullptr, 16));
     EXPECT_DOUBLE_EQ(wd.getIndustrialValue(), 262143.0);
 }
