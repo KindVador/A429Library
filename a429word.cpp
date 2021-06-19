@@ -180,7 +180,7 @@ std::string A429Word::toBinaryString()
     return std::bitset<32>(m_rawValue).to_string();
 }
 
-std::string A429Word::getLabelAsOctalString()
+std::string A429Word::getLabelAsOctalString() const
 {
     if (m_labelNumberMsbFirst) {
         std::string labelString = std::bitset<8>(m_labelNumber).to_string();
@@ -243,4 +243,10 @@ uint A429Word::getBitRange(const ushort& msbPos, const ushort& lsbPos)
     }
     long long maskMsbLsb = ((1 << msbPos) - 1) & (~((1 << (lsbPos - 1)) - 1));
     return (m_rawValue & maskMsbLsb) >> (lsbPos - 1);
+}
+
+std::ostream& operator<<(std::ostream& os, const A429Word& item)
+{
+    os << item.m_parity << " " << item.m_ssm << " " << item.m_payload << " " << item.m_sdi << " " << item.getLabelAsOctalString();
+    return os;
 }

@@ -3,6 +3,8 @@
 #include <cstdio>
 #include <algorithm>
 #include <bitset>
+#include <iostream>
+#include <sstream>
 
 TEST(A429WordTest, DefaultConstructorTest) {
     A429Word wd = A429Word();
@@ -377,4 +379,17 @@ TEST(A429WordTest, getBitRange) {
     EXPECT_THROW(wd.getBitRange(33, 33), std::out_of_range);
     // range_error exception
     EXPECT_THROW(wd.getBitRange(14, 28), std::range_error);
+}
+
+TEST(A429WordTest, OutputOperator) {
+    A429Word wd = A429Word("FFFFFFFF", true, 16, true);
+    std::stringstream out;
+    out << wd;
+    EXPECT_EQ(out.str(), "1 3 524287 3 377");
+    
+    std::stringstream out2;
+    
+    wd = A429Word("7C3C3CF0", true, 16, true);
+    out2 << wd;
+    EXPECT_EQ(out2.str(), "0 3 462607 0 017");
 }

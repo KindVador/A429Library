@@ -2,6 +2,7 @@
 #define A429WORD_HPP
 
 #include <string>
+#include <iostream>
 
 #define LABEL_MASK 255UL
 #define SDI_MASK 768UL
@@ -14,6 +15,8 @@ using ushort = unsigned short;
 
 class A429Word
 {
+    friend std::ostream& operator<<(std::ostream& os, const A429Word& item);
+
 public:
     // CONSTRUCTORS
     A429Word();
@@ -23,6 +26,8 @@ public:
     // DESTRUCTOR
     virtual ~A429Word();
 
+    // OPERATORS
+    
     // GETTERS & SETTERS
     uint rawValue() const;
     void setRawValue(uint rawValue);
@@ -53,7 +58,7 @@ public:
     bool getBit(const ushort &bitNumber);
     void setBit(const ushort &bitNumber, const bool &value);
     std::string toBinaryString();
-    std::string getLabelAsOctalString();
+    std::string getLabelAsOctalString() const;
     double getBnrValue(const bool &isSigned, const ushort &bitSign, const ushort &msbPos, const ushort &lsbPos, const double &resolution);
     bool isParityValid();
     void toggleBit(const ushort& bitNumber);
@@ -69,5 +74,7 @@ private:
     bool m_labelNumberMsbFirst = true;
     bool m_isOddParity = true;
 };
+
+std::ostream& operator<<(std::ostream& os, const A429Word& item);
 
 #endif // A429WORD_HPP
