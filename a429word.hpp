@@ -61,12 +61,12 @@ public:
     std::string getLabelAsBinaryString(const bool &msbFirst);
     bool getBit(const ushort &bitNumber) const;
     void setBit(const ushort &bitNumber, const bool &value);
-    std::string toBinaryString();
+    std::string toBinaryString() const;
     std::string getLabelAsOctalString() const;
     double getBnrValue(const bool &isSigned, const ushort &bitSign, const ushort &msbPos, const ushort &lsbPos, const double &resolution);
-    bool isParityValid();
+    bool isParityValid() const;
     void toggleBit(const ushort& bitNumber);
-    uint getBitRange(const ushort& msbPos, const ushort& lsbPos);
+    uint getBitRange(const ushort& msbPos, const ushort& lsbPos) const;
 
 private:
     uint m_rawValue = 0;

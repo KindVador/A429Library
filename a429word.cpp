@@ -175,7 +175,7 @@ void A429Word::setBit(const ushort &bitNumber, const bool &value)
     m_rawValue = (m_rawValue & mask) | (value << (bitNumber - 1));
 }
 
-std::string A429Word::toBinaryString()
+std::string A429Word::toBinaryString() const
 {
     return std::bitset<32>(m_rawValue).to_string();
 }
@@ -215,7 +215,7 @@ double A429Word::getBnrValue(const bool &isSigned, const ushort &bitSign, const 
     }
 }
 
-bool A429Word::isParityValid()
+bool A429Word::isParityValid() const
 {
     if ((std::bitset<32>(m_rawValue).count() % 2) == m_isOddParity) {
         return true;
@@ -233,7 +233,7 @@ void A429Word::toggleBit(const ushort &bitNumber)
     setRawValue(m_rawValue);
 }
 
-uint A429Word::getBitRange(const ushort& msbPos, const ushort& lsbPos)
+uint A429Word::getBitRange(const ushort& msbPos, const ushort& lsbPos) const
 {
     if (msbPos > 32 || lsbPos > 32) {
         throw std::out_of_range("MSB or LSB position should be lower than 33 (decimal base)");
