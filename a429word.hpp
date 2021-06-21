@@ -16,6 +16,8 @@ using ushort = unsigned short;
 class A429Word
 {
     friend std::ostream& operator<<(std::ostream& os, const A429Word& item);
+    friend bool operator==(const A429Word& lhs, const A429Word& rhs);
+    friend bool operator!=(const A429Word& lhs, const A429Word& rhs);
 
 public:
     // CONSTRUCTORS
@@ -76,5 +78,7 @@ private:
 };
 
 std::ostream& operator<<(std::ostream& os, const A429Word& item);
+bool operator==(const A429Word& lhs, const A429Word& rhs);
+bool operator!=(const A429Word& lhs, const A429Word& rhs);
 
 #endif // A429WORD_HPP

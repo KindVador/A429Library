@@ -393,3 +393,34 @@ TEST(A429WordTest, OutputOperator) {
     out2 << wd;
     EXPECT_EQ(out2.str(), "0 3 462607 0 017");
 }
+
+TEST(A429WordTest, EqualityOperator) {
+    // CASE EQUAL
+    A429Word wd1 = A429Word("FFFFFFFF", true, 16, true);
+    A429Word wd2 = A429Word("FFFFFFFF", true, 16, true);
+    EXPECT_TRUE(wd1 == wd2);
+    EXPECT_TRUE(wd2 == wd1);
+    EXPECT_FALSE(wd1 != wd2);
+    EXPECT_FALSE(wd2 != wd1);
+
+    // CASE NOT EQUAL RAW VALUE
+    A429Word wd3 = A429Word("FFFFFFFE", true, 16, true);
+    EXPECT_TRUE(wd1 != wd3);
+    EXPECT_TRUE(wd3 != wd1);
+    EXPECT_FALSE(wd1 == wd3);
+    EXPECT_FALSE(wd3 == wd1);
+
+    // CASE NOT EQUAL labelNumberMsbFirst
+    A429Word wd4 = A429Word("FFFFFFFF", false, 16, true);
+    EXPECT_TRUE(wd1 != wd4);
+    EXPECT_TRUE(wd4 != wd1);
+    EXPECT_FALSE(wd1 == wd4);
+    EXPECT_FALSE(wd4 == wd1);
+
+    // CASE NOT EQUAL RAW VALUE
+    A429Word wd5 = A429Word("FFFFFFFF", true, 16, false);
+    EXPECT_TRUE(wd1 != wd5);
+    EXPECT_TRUE(wd5 != wd1);
+    EXPECT_FALSE(wd1 == wd5);
+    EXPECT_FALSE(wd5 == wd1);
+}

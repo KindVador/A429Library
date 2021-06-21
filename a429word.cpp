@@ -250,3 +250,13 @@ std::ostream& operator<<(std::ostream& os, const A429Word& item)
     os << item.m_parity << " " << item.m_ssm << " " << item.m_payload << " " << item.m_sdi << " " << item.getLabelAsOctalString();
     return os;
 }
+
+bool operator==(const A429Word& lhs, const A429Word& rhs)
+{
+    return lhs.rawValue() == rhs.rawValue() && lhs.labelNumberMsbFirst() == rhs.labelNumberMsbFirst() && lhs.isOddParity() == rhs.isOddParity();
+}
+
+bool operator!=(const A429Word& lhs, const A429Word& rhs)
+{
+    return !(lhs == rhs);
+}
