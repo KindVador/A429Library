@@ -29,6 +29,8 @@ public:
     virtual ~A429Word();
 
     // OPERATORS
+    bool operator[](std::size_t n) { return getBit(n); }
+    const bool operator[](std::size_t n) const { return getBit(n); }
     
     // GETTERS & SETTERS
     uint rawValue() const;
@@ -57,7 +59,7 @@ public:
 
     // METHODS
     std::string getLabelAsBinaryString(const bool &msbFirst);
-    bool getBit(const ushort &bitNumber);
+    bool getBit(const ushort &bitNumber) const;
     void setBit(const ushort &bitNumber, const bool &value);
     std::string toBinaryString();
     std::string getLabelAsOctalString() const;

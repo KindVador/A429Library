@@ -155,7 +155,7 @@ std::string A429Word::getLabelAsBinaryString(const bool &msbFirst)
     }
 }
 
-bool A429Word::getBit(const ushort &bitNumber)
+bool A429Word::getBit(const ushort &bitNumber) const
 {
     if (bitNumber > 32) {
         throw std::out_of_range("Bit number value should be lower than 33 (decimal base)");

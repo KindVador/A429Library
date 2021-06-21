@@ -424,3 +424,17 @@ TEST(A429WordTest, EqualityOperator) {
     EXPECT_FALSE(wd1 == wd5);
     EXPECT_FALSE(wd5 == wd1);
 }
+
+TEST(A429WordTest, SubscriptOperator) {
+    // CASE ALL BITS SET TO 1
+    A429Word wd = A429Word("FFFFFFFF", true, 16, true);
+    for(int i=1; i < 33; ++i) {
+        EXPECT_TRUE(wd[i]);
+    }
+    
+    // CASE ALL BITS SET 0
+    A429Word wd1 = A429Word("00000000", true, 16, true);
+    for(int i=1; i < 33; ++i) {
+        EXPECT_FALSE(wd1[i]);
+    }
+}
