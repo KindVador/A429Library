@@ -36,6 +36,13 @@ public:
     uint rawValue() const;
     void setRawValue(uint rawValue);
 
+    bool labelNumberMsbFirst() const;
+    void setLabelNumberMsbFirst(bool value);
+
+    bool isOddParity() const;
+    void setIsOddParity(const bool value);
+
+    // METHODS
     ushort labelNumber() const;
     void setLabelNumber(ushort labelNumber);
 
@@ -50,14 +57,7 @@ public:
 
     bool parity() const;
     void setParity(bool parity);
-
-    bool labelNumberMsbFirst() const;
-    void setLabelNumberMsbFirst(bool value);
-
-    bool isOddParity() const;
-    void setIsOddParity(const bool value);
-
-    // METHODS
+    
     std::string getLabelAsBinaryString(const bool &msbFirst);
     bool getBit(const ushort &bitNumber) const;
     void setBit(const ushort &bitNumber, const bool &value);
@@ -70,11 +70,6 @@ public:
 
 private:
     uint m_rawValue = 0;
-    ushort m_labelNumber = 0;
-    ushort m_sdi = 0;
-    uint m_payload = 0;
-    ushort m_ssm = 0;
-    bool m_parity = 0;
     bool m_labelNumberMsbFirst = true;
     bool m_isOddParity = true;
 };
