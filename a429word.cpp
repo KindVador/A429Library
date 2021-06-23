@@ -146,8 +146,8 @@ std::string A429Word::getLabelAsBinaryString(const bool &msbFirst)
 
 bool A429Word::getBit(const ushort &bitNumber) const
 {
-    if (bitNumber > 32) {
-        throw std::out_of_range("Bit number value should be lower than 33 (decimal base)");
+    if (bitNumber == 0 || bitNumber > 32) {
+        throw std::out_of_range("Bit number value should be between 1 and 32 included");
     }
     uint mask = 1UL << (bitNumber -1 );
     bool bitValue = (m_rawValue & mask) >> (bitNumber -1 );
@@ -157,8 +157,8 @@ bool A429Word::getBit(const ushort &bitNumber) const
 
 void A429Word::setBit(const ushort &bitNumber, const bool &value)
 {
-    if (bitNumber > 32) {
-        throw std::out_of_range("Bit number value should be lower than 33 (decimal base)");
+    if (bitNumber == 0 || bitNumber > 32) {
+        throw std::out_of_range("Bit number value should be between 1 and 32 included");
     }
     uint mask = 4294967295UL ^ (1 << (bitNumber - 1));
     m_rawValue = (m_rawValue & mask) | (value << (bitNumber - 1));
@@ -215,8 +215,8 @@ bool A429Word::isParityValid() const
 
 void A429Word::toggleBit(const ushort &bitNumber)
 {
-    if (bitNumber > 32) {
-        throw std::out_of_range("Bit number value should be lower than 33 (decimal base)");
+    if (bitNumber == 0 || bitNumber > 32) {
+        throw std::out_of_range("Bit number value should be between 1 and 32 included");
     }
     m_rawValue ^=  (1UL << (bitNumber - 1));
     setRawValue(m_rawValue);
@@ -224,8 +224,8 @@ void A429Word::toggleBit(const ushort &bitNumber)
 
 uint A429Word::getBitRange(const ushort& msbPos, const ushort& lsbPos) const
 {
-    if (msbPos > 32 || lsbPos > 32) {
-        throw std::out_of_range("MSB or LSB position should be lower than 33 (decimal base)");
+    if (msbPos == 0 || lsbPos == 0 || msbPos > 32 || lsbPos > 32) {
+        throw std::out_of_range("MSB or LSB position should be between 1 and 32 included");
     } else if (msbPos < lsbPos)
     {
         throw std::range_error("MSB position should be greate ot equal to LSB position");

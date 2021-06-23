@@ -247,6 +247,7 @@ TEST(A429WordTest, getBit) {
         }
     }
     // out_of_range exception
+    EXPECT_THROW(wd.getBit(0), std::out_of_range);
     EXPECT_THROW(wd.getBit(33), std::out_of_range);
 }
 
@@ -263,6 +264,7 @@ TEST(A429WordTest, setBit) {
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
     }
     // out_of_range exception
+    EXPECT_THROW(wd.setBit(0, true), std::out_of_range);
     EXPECT_THROW(wd.setBit(33, true), std::out_of_range);
 }
 
@@ -344,6 +346,7 @@ TEST(A429WordTest, toggleBit) {
         EXPECT_TRUE(wd.getBit(i));
     }
     // out_of_range exception
+    EXPECT_THROW(wd.toggleBit(0), std::out_of_range);
     EXPECT_THROW(wd.toggleBit(33), std::out_of_range);
 }
 
@@ -375,6 +378,8 @@ TEST(A429WordTest, getBitRange) {
     EXPECT_EQ(wd.getBitRange(29, 29), 1);
     EXPECT_EQ(wd.getBitRange(26, 26), 0);
     // out_of_range exception
+    EXPECT_THROW(wd.getBitRange(0, 0), std::out_of_range);
+    EXPECT_THROW(wd.getBitRange(32, 0), std::out_of_range);
     EXPECT_THROW(wd.getBitRange(33, 12), std::out_of_range);
     EXPECT_THROW(wd.getBitRange(33, 33), std::out_of_range);
     // range_error exception
@@ -437,4 +442,8 @@ TEST(A429WordTest, SubscriptOperator) {
     for(int i=1; i < 33; ++i) {
         EXPECT_FALSE(wd1[i]);
     }
+
+    // out_of_range exception
+    EXPECT_THROW(wd[0], std::out_of_range);
+    EXPECT_THROW(wd[33], std::out_of_range);
 }
