@@ -22,8 +22,18 @@ TEST(A429BcdWordTest, Format0) {
         Digit 5 = bits 16/13
         Digit 6 = bits 12/09
     */
-    A429BcdWord wd = A429BcdWord();
+   // LABEL=245 BCD_value=123456 SSM=00  Parity=0(Valid)
     
+    DigitsVec digitsPos = {std::make_pair(29, 29), std::make_pair(28, 25), std::make_pair(24, 21), std::make_pair(20, 17), std::make_pair(16, 13), std::make_pair(12, 9)};
+    A429BcdWord wd1 = A429BcdWord("123456A5", digitsPos, true, 16, true, 1.0);
+    EXPECT_EQ(wd1.getLabelAsOctalString(), "245");
+    EXPECT_EQ(wd1.sdi(), 2);
+    EXPECT_EQ(wd1.ssm(), 0);
+    EXPECT_EQ(wd1.parity(), 0);
+    EXPECT_NEAR(123456, wd1.value(), 0.001);
+    // same raw with a new resolution
+    wd1.setResolution(0.1);
+    EXPECT_NEAR(12345.6, wd1.value(), 0.001);
 }
 
 TEST(A429BcdWordTest, Format1) {
