@@ -46,8 +46,16 @@ TEST(A429BcdWordTest, Format1) {
         Digit 4 = bits 14/11
         SDI = bits 10/09
     */
-    A429BcdWord wd = A429BcdWord();
-    
+    DigitsVec digitsPos = {std::make_pair(26, 23), std::make_pair(22, 19), std::make_pair(18, 15), std::make_pair(14, 11)};
+    A429BcdWord wd1 = A429BcdWord("6048D2E9", digitsPos, true, 16, true, 1.0);
+    EXPECT_EQ(wd1.getLabelAsOctalString(), "227");
+    EXPECT_EQ(wd1.sdi(), 2);
+    EXPECT_EQ(wd1.ssm(), 3);
+    EXPECT_EQ(wd1.parity(), 0);
+    EXPECT_NEAR(1234, wd1.value(), 0.001);
+    // same raw with a new resolution
+    wd1.setResolution(0.1);
+    EXPECT_NEAR(123.4, wd1.value(), 0.001);
 }
 
 TEST(A429BcdWordTest, Format2) {
@@ -61,7 +69,16 @@ TEST(A429BcdWordTest, Format2) {
         Digit 5 = bits 14/11
         SDI = bits 10/09
     */
-    A429BcdWord wd = A429BcdWord();
+    DigitsVec digitsPos = {std::make_pair(29, 27), std::make_pair(26, 23), std::make_pair(22, 19), std::make_pair(18, 15), std::make_pair(14, 11)};
+    A429BcdWord wd1 = A429BcdWord("DD950D69", digitsPos, true, 16, true, 1.0);
+    EXPECT_EQ(wd1.getLabelAsOctalString(), "226");
+    EXPECT_EQ(wd1.sdi(), 1);
+    EXPECT_EQ(wd1.ssm(), 2);
+    EXPECT_EQ(wd1.parity(), 1);
+    EXPECT_NEAR(76543, wd1.value(), 0.001);
+    // same raw with a new resolution
+    wd1.setResolution(0.1);
+    EXPECT_NEAR(7654.3, wd1.value(), 0.001);
     
 }
 
@@ -76,7 +93,16 @@ TEST(A429BcdWordTest, Format6) {
         data = bit 14
         SDI = bits 10/09
     */
-    A429BcdWord wd = A429BcdWord();
+    DigitsVec digitsPos = {std::make_pair(29, 27), std::make_pair(26, 23), std::make_pair(22, 19), std::make_pair(18, 15)};
+    A429BcdWord wd1 = A429BcdWord("5D950DA1", digitsPos, true, 16, true, 1.0);
+    EXPECT_EQ(wd1.getLabelAsOctalString(), "205");
+    EXPECT_EQ(wd1.sdi(), 1);
+    EXPECT_EQ(wd1.ssm(), 2);
+    EXPECT_EQ(wd1.parity(), 0);
+    EXPECT_NEAR(7654, wd1.value(), 0.001);
+    // same raw with a new resolution
+    wd1.setResolution(0.1);
+    EXPECT_NEAR(765.4, wd1.value(), 0.001);
     
 }
 
@@ -90,7 +116,16 @@ TEST(A429BcdWordTest, Format7) {
         Digit 4 = bits 17/14
         SDI = bits 10/09
     */
-    A429BcdWord wd = A429BcdWord();
+    DigitsVec digitsPos = {std::make_pair(27, 26), std::make_pair(25, 22), std::make_pair(21, 18), std::make_pair(17, 14)};
+    A429BcdWord wd1 = A429BcdWord("824683E0", digitsPos, true, 16, true, 1.0);
+    EXPECT_EQ(wd1.getLabelAsOctalString(), "007");
+    EXPECT_EQ(wd1.sdi(), 3);
+    EXPECT_EQ(wd1.ssm(), 0);
+    EXPECT_EQ(wd1.parity(), 1);
+    EXPECT_NEAR(1234, wd1.value(), 0.001);
+    // same raw with a new resolution
+    wd1.setResolution(0.1);
+    EXPECT_NEAR(123.4, wd1.value(), 0.001);
     
 }
 
@@ -105,7 +140,16 @@ TEST(A429BcdWordTest, Format8) {
         Digit 5 = bits 17/14
         SDI = bits 10/09
     */
-    A429BcdWord wd = A429BcdWord();
+    DigitsVec digitsPos = {std::make_pair(28, 26), std::make_pair(25, 22), std::make_pair(21, 18), std::make_pair(17, 14)};
+    A429BcdWord wd1 = A429BcdWord("8468A0CA", digitsPos, true, 16, true, 1.0);
+    EXPECT_EQ(wd1.getLabelAsOctalString(), "123");
+    EXPECT_EQ(wd1.sdi(), 0);
+    EXPECT_EQ(wd1.ssm(), 0);
+    EXPECT_EQ(wd1.parity(), 1);
+    EXPECT_NEAR(2345, wd1.value(), 0.001);
+    // same raw with a new resolution
+    wd1.setResolution(0.01);
+    EXPECT_NEAR(23.45, wd1.value(), 0.001);
     
 }
 
@@ -120,6 +164,15 @@ TEST(A429BcdWordTest, Format9) {
 
         SDI = bits 10/09
     */
-    A429BcdWord wd = A429BcdWord();
+    DigitsVec digitsPos = {std::make_pair(23, 23), std::make_pair(22, 19), std::make_pair(18, 15), std::make_pair(14, 11)};
+    A429BcdWord wd1 = A429BcdWord("0048D0B8", digitsPos, true, 16, true, 1.0);
+    EXPECT_EQ(wd1.getLabelAsOctalString(), "035");
+    EXPECT_EQ(wd1.sdi(), 0);
+    EXPECT_EQ(wd1.ssm(), 0);
+    EXPECT_EQ(wd1.parity(), 0);
+    EXPECT_NEAR(1234, wd1.value(), 0.001);
+    // same raw with a new resolution
+    wd1.setResolution(0.1);
+    EXPECT_NEAR(123.4, wd1.value(), 0.001);
     
 }
