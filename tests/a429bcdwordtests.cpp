@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "../a429bcdword.hpp"
+#include <vector>
 
 TEST(A429BcdWordTest, DefaultConstructorTest) {
     A429BcdWord wd = A429BcdWord();
@@ -9,6 +10,115 @@ TEST(A429BcdWordTest, DefaultConstructorTest) {
     }
     EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 29, 28, 11, 1.0), 0.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "00000000") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 00000000";
+}
+
+TEST(A429BcdWordTest, IntegerConstructorTest) {
+    
+    DigitsVec digitsPos = {std::make_pair(29, 29), std::make_pair(28, 25), std::make_pair(24, 21), std::make_pair(20, 17), std::make_pair(16, 13), std::make_pair(12, 9)};
+    A429BcdWord wd = A429BcdWord(4294967295, digitsPos, true, true, 1.0);
+    EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
+    for (int i=1; i<33; ++i) {
+        EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
+    }
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
+    EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
+}
+
+TEST(A429BcdWordTest, StringConstructorTest) {
+    DigitsVec digitsPos = {std::make_pair(29, 29), std::make_pair(28, 25), std::make_pair(24, 21), std::make_pair(20, 17), std::make_pair(16, 13), std::make_pair(12, 9)};
+    // Hexadecimal String
+    A429BcdWord wd = A429BcdWord("FFFFFFFF", digitsPos, true, 16, true, 1.0);
+    EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
+    for (int i=1; i<33; ++i) {
+        EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
+    }
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
+    EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
+
+    // Binary String
+    wd = A429BcdWord("11111111111111111111111111111111", digitsPos, true, 2);
+    EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
+    for (int i=1; i<33; ++i) {
+        EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
+    }
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
+    EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
+    
+    // Octal String
+    wd = A429BcdWord("37777777777", digitsPos, true, 8);
+    EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
+    for (int i=1; i<33; ++i) {
+        EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
+    }
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
+    EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
+
+    // Decimal String
+    wd = A429BcdWord("4294967295", digitsPos, true, 10);
+    EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
+    for (int i=1; i<33; ++i) {
+        EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
+    }
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
+    EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
+}
+
+TEST(A429BcdWordTest, DefaultInitBCDConstructorTest) {
+    DigitsVec digitsPos = {std::make_pair(28, 25), std::make_pair(24, 21)};
+    A429BcdWord wd = A429BcdWord(digitsPos, 1.0);
+    EXPECT_EQ(wd.getLabelAsOctalString(), "000") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 000";
+    for (int i=1; i<33; ++i) {
+        EXPECT_FALSE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 0";
+    }
+    EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 29, 28, 11, 1.0), 0.0);
+    EXPECT_EQ(wd.getLabelAsBinaryString(true), "00000000") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 00000000";
+}
+
+TEST(A429BcdWordTest, GetterIsSigned) {
+    A429BcdWord wd = A429BcdWord();
+    EXPECT_FALSE(wd.isSigned());
+}
+
+TEST(A429BcdWordTest, SetterIsSigned) {
+    A429BcdWord wd = A429BcdWord();
+    EXPECT_FALSE(wd.isSigned());
+    wd.setIsSigned(true);
+    EXPECT_TRUE(wd.isSigned());
+}
+
+TEST(A429BcdWordTest, GetterResolution) {
+    A429BcdWord wd = A429BcdWord();
+    EXPECT_DOUBLE_EQ(wd.resolution(), 1.0);
+}
+
+TEST(A429BcdWordTest, SetterSetResolution) {
+    A429BcdWord wd = A429BcdWord();
+    EXPECT_DOUBLE_EQ(wd.resolution(), 1.0);
+    std::vector<double> samples{0.1, 0.001, 0.5, 0.002547};
+    for (auto it = samples.cbegin(); it != samples.cend(); ++it)
+    {
+        wd.setResolution(*it);
+        EXPECT_NEAR(*it, wd.resolution(), 0.0001);
+    }
+}
+
+TEST(A429BcdWordTest, GetterDigitsPositions) {
+    // default case: empty vector
+    A429BcdWord wd = A429BcdWord();
+    EXPECT_EQ(wd.digitsPositions().size(), 0);
+    // case with initialisation
+    DigitsVec digitsPos = {std::make_pair(29, 29), std::make_pair(28, 25), std::make_pair(24, 21), std::make_pair(20, 17), std::make_pair(16, 13), std::make_pair(12, 9)};
+    A429BcdWord wd2 = A429BcdWord(digitsPos, 1.0);
+    EXPECT_EQ(wd2.digitsPositions().size(), digitsPos.size());
+}
+
+TEST(A429BcdWordTest, SetterSetDigitsPositions) {
+    // default case: empty vector
+    A429BcdWord wd = A429BcdWord();
+    EXPECT_EQ(wd.digitsPositions().size(), 0);
+    DigitsVec digitsPos = {std::make_pair(29, 29), std::make_pair(28, 25), std::make_pair(24, 21), std::make_pair(20, 17), std::make_pair(16, 13), std::make_pair(12, 9)};
+    wd.setDigitsPositions(digitsPos);
+    EXPECT_EQ(wd.digitsPositions().size(), digitsPos.size());
 }
 
 TEST(A429BcdWordTest, Format0) {

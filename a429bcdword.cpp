@@ -38,16 +38,6 @@ void A429BcdWord::setIsSigned(const bool value)
     m_isSigned = value;
 }
 
-ushort A429BcdWord::signBit() const
-{
-    return m_signBit;
-}
-
-void A429BcdWord::setSignBit(const ushort bitNumber)
-{
-    m_signBit = bitNumber;
-}
-
 float A429BcdWord::resolution() const
 {
     return m_resolution;

@@ -25,9 +25,6 @@ public:
     bool isSigned() const;
     void setIsSigned(const bool value);
 
-    ushort signBit() const;
-    void setSignBit(const ushort bitNumber);
-
     float resolution() const;
     void setResolution(const float value);
 
@@ -41,7 +38,6 @@ public:
 
 private:
     bool m_isSigned = false;
-    ushort m_signBit = -1;
     float m_resolution = 1.0;
     DigitsVec m_digitsPos; 
 };
