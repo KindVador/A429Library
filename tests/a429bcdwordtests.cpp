@@ -74,18 +74,6 @@ TEST(A429BcdWordTest, DefaultInitBCDConstructorTest) {
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "00000000") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 00000000";
 }
 
-TEST(A429BcdWordTest, GetterIsSigned) {
-    A429BcdWord wd = A429BcdWord();
-    EXPECT_FALSE(wd.isSigned());
-}
-
-TEST(A429BcdWordTest, SetterIsSigned) {
-    A429BcdWord wd = A429BcdWord();
-    EXPECT_FALSE(wd.isSigned());
-    wd.setIsSigned(true);
-    EXPECT_TRUE(wd.isSigned());
-}
-
 TEST(A429BcdWordTest, GetterResolution) {
     A429BcdWord wd = A429BcdWord();
     EXPECT_DOUBLE_EQ(wd.resolution(), 1.0);
@@ -119,6 +107,40 @@ TEST(A429BcdWordTest, SetterSetDigitsPositions) {
     DigitsVec digitsPos = {std::make_pair(29, 29), std::make_pair(28, 25), std::make_pair(24, 21), std::make_pair(20, 17), std::make_pair(16, 13), std::make_pair(12, 9)};
     wd.setDigitsPositions(digitsPos);
     EXPECT_EQ(wd.digitsPositions().size(), digitsPos.size());
+}
+
+TEST(A429BcdWordTest, declareDigit) {
+    A429BcdWord wd = A429BcdWord();
+    // case add one digit in a empty vector
+    wd.declareDigit(std::make_pair(28, 25));
+    EXPECT_EQ(wd.digitsPositions().size(), 1);
+
+    // case add one digit to a non empty vector
+    wd.declareDigit(std::make_pair(24, 21));
+    EXPECT_EQ(wd.digitsPositions().size(), 2);
+
+    // casse add a digit wich is already declared
+    EXPECT_EQ(wd.digitsPositions().size(), 2);
+
+    // case add a digit which have some bits superposed to another digit
+    EXPECT_THROW(wd.declareDigit(std::make_pair(21, 18)), std::range_error);
+}
+
+TEST(A429BcdWordTest, resetDigitsConfig) {
+    DigitsVec digitsPos = {std::make_pair(29, 29), std::make_pair(28, 25), std::make_pair(24, 21), std::make_pair(20, 17), std::make_pair(16, 13), std::make_pair(12, 9)};
+    A429BcdWord wd = A429BcdWord(digitsPos, 1.0);
+    EXPECT_EQ(wd.digitsPositions().size(), 6);
+    wd.resetDigitsConfig();
+    EXPECT_EQ(wd.digitsPositions().size(), 0);
+}
+
+TEST(A429BcdWordTest, value) {
+    DigitsVec digitsPos = {std::make_pair(29, 29), std::make_pair(28, 25), std::make_pair(24, 21), std::make_pair(20, 17), std::make_pair(16, 13), std::make_pair(12, 9)};
+    A429BcdWord wd1 = A429BcdWord("123456A5", digitsPos, true, 16, true, 1.0);
+    EXPECT_NEAR(123456, wd1.value(), 0.001);
+    // same raw with a new resolution
+    wd1.setResolution(0.1);
+    EXPECT_NEAR(12345.6, wd1.value(), 0.001);
 }
 
 TEST(A429BcdWordTest, Format0) {

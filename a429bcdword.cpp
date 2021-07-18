@@ -1,5 +1,7 @@
 #include "a429bcdword.hpp"
 #include <cmath>
+#include <algorithm>
+#include <stdexcept>
 
 A429BcdWord::A429BcdWord(): A429Word()
 {
@@ -28,16 +30,6 @@ A429BcdWord::~A429BcdWord()
 
 }
 
-bool A429BcdWord::isSigned() const
-{
-    return m_isSigned;
-}
-
-void A429BcdWord::setIsSigned(const bool value)
-{
-    m_isSigned = value;
-}
-
 float A429BcdWord::resolution() const
 {
     return m_resolution;
@@ -60,8 +52,21 @@ void A429BcdWord::setDigitsPositions(const DigitsVec digits)
 
 void A429BcdWord::declareDigit(DigitConfig pos)
 {
-    // TODO: check a digit is already declared on this position
-    m_digitsPos.push_back(pos);
+    // check if digit is already declared
+    if(std::find(m_digitsPos.cbegin(), m_digitsPos.cend(), pos) != m_digitsPos.cend())
+    {
+        // digit is already in the vector
+        return;
+    } else {
+        // check if digit is superposed with another one
+        for(auto it = m_digitsPos.cbegin(); it != m_digitsPos.cend(); ++it) {
+            if(it->first == pos.first || it->first == pos.second || it->second == pos.first || it->second == pos.second) throw std::range_error("Superposition of one Digit");
+        }
+        
+        // we add the digit to the vector
+        m_digitsPos.push_back(pos);
+
+    }
 }
 
 void A429BcdWord::resetDigitsConfig()

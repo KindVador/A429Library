@@ -22,9 +22,6 @@ public:
     virtual ~A429BcdWord();
 
     // GETTERS & SETTERS
-    bool isSigned() const;
-    void setIsSigned(const bool value);
-
     float resolution() const;
     void setResolution(const float value);
 
@@ -37,7 +34,6 @@ public:
     double value() const;
 
 private:
-    bool m_isSigned = false;
     float m_resolution = 1.0;
     DigitsVec m_digitsPos; 
 };
