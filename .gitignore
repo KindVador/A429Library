@@ -34,11 +34,12 @@
 # build directory
 /build
 
-# dependencies
-/googletest
-
 # macOS file
 .DS_Store
 
 # IDE
 /.vscode
+/.idea
+
+# CMake build
+cmake-build-debug
