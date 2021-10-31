@@ -1,64 +1,81 @@
-#ifndef A429WORD_H
-#define A429WORD_H
+#ifndef A429WORD_HPP
+#define A429WORD_HPP
 
 #include <string>
+#include <iostream>
 
 #define LABEL_MASK 255UL
 #define SDI_MASK 768UL
 #define PAYLOAD_MASK 536869888UL
 #define SSM_MASK 1610612736UL
 #define PARITY_MASK 2147483648UL
-#define EVEN_PARITY 0
-#define ODD_PARITY 1
+
+using uint = unsigned int;
+using ushort = unsigned short;
 
 class A429Word
 {
+    friend std::ostream& operator<<(std::ostream& os, const A429Word& item);
+    friend bool operator==(const A429Word& lhs, const A429Word& rhs);
+    friend bool operator!=(const A429Word& lhs, const A429Word& rhs);
+
 public:
     // CONSTRUCTORS
     A429Word();
-    A429Word(unsigned int value, bool labelNumberMsbFirst=true);
-    A429Word(std::string value, bool labelNumberMsbFirst=true, int base=16);
+    A429Word(uint value, bool labelNumberMsbFirst=true, bool oddParity=true);
+    A429Word(std::string value, bool labelNumberMsbFirst=true, int base=16, bool oddParity=true);
 
+    // DESTRUCTOR
+    virtual ~A429Word();
+
+    // OPERATORS
+    bool operator[](std::size_t n) { return getBit(n); }
+    const bool operator[](std::size_t n) const { return getBit(n); }
+    
     // GETTERS & SETTERS
-    unsigned int rawValue() const;
-    void setRawValue(unsigned int rawValue);
-
-    unsigned short labelNumber() const;
-    void setLabelNumber(unsigned short labelNumber);
-
-    unsigned short sdi() const;
-    void setSdi(unsigned short sdi);
-
-    unsigned int payload() const;
-    void setPayload(unsigned int payload);
-
-    unsigned short ssm() const;
-    void setSsm(unsigned short ssm);
-
-    bool parity() const;
-    void setParity(bool parity);
+    uint rawValue() const;
+    void setRawValue(uint rawValue);
 
     bool labelNumberMsbFirst() const;
     void setLabelNumberMsbFirst(bool value);
 
+    bool isOddParity() const;
+    void setIsOddParity(const bool value);
+
     // METHODS
+    ushort labelNumber() const;
+    void setLabelNumber(ushort labelNumber);
+
+    ushort sdi() const;
+    void setSdi(ushort sdi);
+
+    uint payload() const;
+    void setPayload(uint payload);
+
+    ushort ssm() const;
+    void setSsm(ushort ssm);
+
+    bool parity() const;
+    void setParity(bool parity);
+    
     std::string getLabelAsBinaryString(const bool &msbFirst);
-    bool getBit(const unsigned short &bitNumber);
-    void setBit(const unsigned short &bitNumber, const bool &value);
-    std::string toBinaryString();
-    std::string getLabelAsOctalString();
-    double getBnrValue(const bool &isSigned, const unsigned short &bitSign, const unsigned short &msbPos, const unsigned short &lsbPos, const double &resolution);
-    bool isParityValid();
-    void toggleBit(const unsigned short& bitNumber);
+    bool getBit(const ushort &bitNumber) const;
+    void setBit(const ushort &bitNumber, const bool &value);
+    std::string toBinaryString() const;
+    std::string getLabelAsOctalString() const;
+    double getBnrValue(const bool &isSigned, const ushort &bitSign, const ushort &msbPos, const ushort &lsbPos, const double &resolution);
+    bool isParityValid() const;
+    void toggleBit(const ushort& bitNumber);
+    uint getBitRange(const ushort& msbPos, const ushort& lsbPos) const;
 
 private:
-    unsigned int m_rawValue = 0;
-    unsigned short m_labelNumber = 0;
-    unsigned short m_sdi = 0;
-    unsigned int m_payload = 0;
-    unsigned short m_ssm = 0;
-    bool m_parity = 0;
+    uint m_rawValue = 0;
     bool m_labelNumberMsbFirst = true;
+    bool m_isOddParity = true;
 };
 
-#endif // A429WORD_H
+std::ostream& operator<<(std::ostream& os, const A429Word& item);
+bool operator==(const A429Word& lhs, const A429Word& rhs);
+bool operator!=(const A429Word& lhs, const A429Word& rhs);
+
+#endif // A429WORD_HPP

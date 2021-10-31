@@ -5,6 +5,8 @@ set(This A429LibraryTests)
 
 set(Sources
     a429wordtests.cpp
+    a429bnrwordtests.cpp
+    a429bcdwordtests.cpp
 )
 
 add_executable(${This} ${Sources})

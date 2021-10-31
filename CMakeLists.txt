@@ -15,10 +15,14 @@ add_subdirectory(googletest)
 
 set(Headers
     a429word.hpp
+    a429bnrword.hpp
+    a429bcdword.hpp
 )
 
 set(Sources
     a429word.cpp
+    a429bnrword.cpp
+    a429bcdword.cpp
 )
 
 add_library(${This} STATIC ${Sources} ${Headers})
