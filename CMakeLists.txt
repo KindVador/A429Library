@@ -11,7 +11,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 enable_testing()
 
-add_subdirectory(googletest)
+add_subdirectory(3rdparty/googletest)
 
 set(Headers
     a429word.hpp
