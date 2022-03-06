@@ -27,11 +27,19 @@ A429Word::~A429Word()
 
 }
 
+/*!
+ * Getter for RAW value
+ * @return uint
+ */
 uint A429Word::rawValue() const
 {
     return m_rawValue;
 }
 
+/*!
+ * Setter for RAW value.
+ * @param rawValue is the RAW value as uint.
+ */
 void A429Word::setRawValue(uint rawValue)
 {
     if (rawValue > 4294967295UL) {
@@ -40,11 +48,19 @@ void A429Word::setRawValue(uint rawValue)
     m_rawValue = rawValue;
 }
 
+/*!
+ * Getter for the Label Number.
+ * @return
+ */
 ushort A429Word::labelNumber() const
 {
     return m_rawValue & LABEL_MASK;
 }
 
+/*!
+ * Setter for the Label Number.
+ * @param labelNumber
+ */
 void A429Word::setLabelNumber(ushort labelNumber)
 {
     if (labelNumber > 255UL) {

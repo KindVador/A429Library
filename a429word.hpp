@@ -13,6 +13,9 @@
 using uint = unsigned int;
 using ushort = unsigned short;
 
+/*!
+ *
+ */
 class A429Word
 {
     friend std::ostream& operator<<(std::ostream& os, const A429Word& item);
