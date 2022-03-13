@@ -31,8 +31,9 @@
 *.out
 *.app
 
-# build directory
+# build directory or CMake build
 /build
+/cmake-build-debug
 
 # macOS file
 .DS_Store
@@ -41,5 +42,6 @@
 /.vscode
 /.idea
 
-# CMake build
-cmake-build-debug
+# doxygen
+/html
+/latex

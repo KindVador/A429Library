@@ -3,11 +3,6 @@
 #include <stdexcept>
 #include <bitset>
 
-A429Word::A429Word()
-{
-
-}
-
 A429Word::A429Word(uint value, bool labelNumberMsbFirst, bool oddParity)
 {
     setRawValue(value);
@@ -15,16 +10,11 @@ A429Word::A429Word(uint value, bool labelNumberMsbFirst, bool oddParity)
     m_isOddParity = oddParity;
 }
 
-A429Word::A429Word(std::string value, bool labelNumberMsbFirst, int base, bool oddParity)
+A429Word::A429Word(const std::string &value, bool labelNumberMsbFirst, int base, bool oddParity)
 {
     setRawValue(std::stoul(value,nullptr,base));
     setLabelNumberMsbFirst(labelNumberMsbFirst);
     m_isOddParity = oddParity;
-}
-
-A429Word::~A429Word()
-{
-
 }
 
 /*!
@@ -142,12 +132,12 @@ bool A429Word::isOddParity() const
     return m_isOddParity;
 }
 
-void A429Word::setIsOddParity(const bool value)
+void A429Word::setIsOddParity(bool value)
 {
     m_isOddParity = value;
 }
 
-std::string A429Word::getLabelAsBinaryString(const bool &msbFirst)
+std::string A429Word::getLabelAsBinaryString(const bool &msbFirst) const
 {
     if (m_labelNumberMsbFirst && msbFirst) {
         return std::bitset<8>(this->labelNumber()).to_string();
@@ -193,30 +183,30 @@ std::string A429Word::getLabelAsOctalString() const
         ushort labelInt = std::stoi(labelString, nullptr, 2);
         char buffer[4];
         sprintf(buffer, "%03o", labelInt);
-        return std::string(buffer);
+        return {buffer};
     } else {
         char buffer[4];
         sprintf(buffer, "%03o", this->labelNumber());
-        return std::string(buffer);
+        return {buffer};
     }
     
 }
 
-double A429Word::getBnrValue(const bool &isSigned, const ushort &bitSign, const ushort &msbPos, const ushort &lsbPos, const double &resolution)
+double A429Word::getBnrValue(const bool &isSigned, const ushort &bitSign, const ushort &msbPos, const ushort &lsbPos, const double &resolution) const
 {    
     long long maskMsbLsb = ((1 << msbPos) - 1) & (~((1 << (lsbPos - 1)) - 1));
     if (isSigned) {
         if ((m_rawValue & (1 << (bitSign - 1))) >> (bitSign - 1) == 1) {
             // Negative input
             // (leading ‘1’ bit): Convert to decimal, getting a positive number, then subtract 2^numBits.
-            return (((m_rawValue & maskMsbLsb) >> (lsbPos - 1)) - (1 << ((msbPos - lsbPos) + 1))) * resolution;
+            return (double)(((m_rawValue & maskMsbLsb) >> (lsbPos - 1)) - (1 << ((msbPos - lsbPos) + 1))) * resolution;
         } else {
             // Non-negative input (leading ‘0’ bit): Simply convert to decimal.
-            return ((m_rawValue & maskMsbLsb) >> (lsbPos - 1)) * resolution;
+            return (double)((m_rawValue & maskMsbLsb) >> (lsbPos - 1)) * resolution;
         }
     } else {
         // Non-negative input (leading ‘0’ bit): Simply convert to decimal.
-        return ((m_rawValue & maskMsbLsb) >> (lsbPos - 1)) * resolution;
+        return (double)((m_rawValue & maskMsbLsb) >> (lsbPos - 1)) * resolution;
     }
 }
 
@@ -244,7 +234,7 @@ uint A429Word::getBitRange(const ushort& msbPos, const ushort& lsbPos) const
         throw std::out_of_range("MSB or LSB position should be between 1 and 32 included");
     } else if (msbPos < lsbPos)
     {
-        throw std::range_error("MSB position should be greate ot equal to LSB position");
+        throw std::range_error("MSB position should be greater ot equal to LSB position");
     }
     long long maskMsbLsb = ((1 << msbPos) - 1) & (~((1 << (lsbPos - 1)) - 1));
     return (m_rawValue & maskMsbLsb) >> (lsbPos - 1);
