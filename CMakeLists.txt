@@ -14,15 +14,15 @@ enable_testing()
 add_subdirectory(3rdparty/googletest)
 
 set(Headers
-    a429word.hpp
-    a429bnrword.hpp
-    a429bcdword.hpp
+        src/a429word.hpp
+        src/a429bnrword.hpp
+        src/a429bcdword.hpp
 )
 
 set(Sources
-    a429word.cpp
-    a429bnrword.cpp
-    a429bcdword.cpp
+        src/a429word.cpp
+        src/a429bnrword.cpp
+        src/a429bcdword.cpp
 )
 
 add_library(${This} STATIC ${Sources} ${Headers})

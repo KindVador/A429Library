@@ -24,17 +24,16 @@ class A429Word
 
 public:
     // CONSTRUCTORS
-    A429Word();
-    A429Word(uint value, bool labelNumberMsbFirst=true, bool oddParity=true);
-    A429Word(std::string value, bool labelNumberMsbFirst=true, int base=16, bool oddParity=true);
+    A429Word() = default;
+    explicit A429Word(uint value, bool labelNumberMsbFirst=true, bool oddParity=true);
+    explicit A429Word(const std::string &value, bool labelNumberMsbFirst=true, int base=16, bool oddParity=true);
 
     // DESTRUCTOR
-    virtual ~A429Word();
+    virtual ~A429Word() = default;
 
     // OPERATORS
-    bool operator[](std::size_t n) { return getBit(n); }
-    const bool operator[](std::size_t n) const { return getBit(n); }
-    
+    bool operator[](std::size_t n) const { return getBit(n); }
+
     // GETTERS & SETTERS
     uint rawValue() const;
     void setRawValue(uint rawValue);
@@ -43,7 +42,7 @@ public:
     void setLabelNumberMsbFirst(bool value);
 
     bool isOddParity() const;
-    void setIsOddParity(const bool value);
+    void setIsOddParity(bool value);
 
     // METHODS
     ushort labelNumber() const;
@@ -61,12 +60,12 @@ public:
     bool parity() const;
     void setParity(bool parity);
     
-    std::string getLabelAsBinaryString(const bool &msbFirst);
+    std::string getLabelAsBinaryString(const bool &msbFirst) const;
     bool getBit(const ushort &bitNumber) const;
     void setBit(const ushort &bitNumber, const bool &value);
     std::string toBinaryString() const;
     std::string getLabelAsOctalString() const;
-    double getBnrValue(const bool &isSigned, const ushort &bitSign, const ushort &msbPos, const ushort &lsbPos, const double &resolution);
+    double getBnrValue(const bool &isSigned, const ushort &bitSign, const ushort &msbPos, const ushort &lsbPos, const double &resolution) const;
     bool isParityValid() const;
     void toggleBit(const ushort& bitNumber);
     uint getBitRange(const ushort& msbPos, const ushort& lsbPos) const;

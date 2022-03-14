@@ -13,26 +13,26 @@ public:
     A429BnrWord();
     A429BnrWord(bool isSigned, ushort signBitPos, ushort msbBitPos, ushort lsbBitPos, double resolution);
     A429BnrWord(uint value, bool labelNumberMsbFirst, bool isSigned, ushort signBitPos, ushort msbBitPos, ushort lsbBitPos, double resolution);
-    A429BnrWord(std::string value, bool labelNumberMsbFirst, int base, bool isSigned, ushort signBitPos, ushort msbBitPos, ushort lsbBitPos, double resolution);
+    A429BnrWord(const std::string& value, bool labelNumberMsbFirst, int base, bool isSigned, ushort signBitPos, ushort msbBitPos, ushort lsbBitPos, double resolution);
 
     // DESTRUCTOR
-    ~A429BnrWord();
+    ~A429BnrWord() override = default;
 
     // GETTERS & SETTERS
     bool isSigned() const;
-    void setIsSigned(const bool value);
+    void setIsSigned(bool value);
 
     ushort signBitPosition() const;
-    void setSignBitPosition(const ushort position);
+    void setSignBitPosition(ushort position);
 
     ushort msbBitPosition() const;
-    void setMsbBitPosition(const ushort position);
+    void setMsbBitPosition(ushort position);
 
     ushort lsbBitPosition() const;
-    void setLsbBitPosition(const ushort position);
+    void setLsbBitPosition(ushort position);
 
     double resolution() const;
-    void setResolution(const double value);
+    void setResolution(double value);
 
     // METHODS
     double getIndustrialValue();

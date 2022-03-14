@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
-#include "../a429bcdword.hpp"
+#include "../src/a429bcdword.hpp"
 #include <vector>
 
 TEST(A429BcdWordTest, DefaultConstructorTest) {
     A429BcdWord wd = A429BcdWord();
     EXPECT_EQ(wd.getLabelAsOctalString(), "000") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 000";
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_FALSE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 0";
-    }
+
     EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 29, 28, 11, 1.0), 0.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "00000000") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 00000000";
 }
@@ -17,9 +17,9 @@ TEST(A429BcdWordTest, IntegerConstructorTest) {
     DigitsVec digitsPos = {std::make_pair(29, 29), std::make_pair(28, 25), std::make_pair(24, 21), std::make_pair(20, 17), std::make_pair(16, 13), std::make_pair(12, 9)};
     A429BcdWord wd = A429BcdWord(4294967295, digitsPos, true, true, 1.0);
     EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
-    }
+
     EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
 }
@@ -29,36 +29,36 @@ TEST(A429BcdWordTest, StringConstructorTest) {
     // Hexadecimal String
     A429BcdWord wd = A429BcdWord("FFFFFFFF", digitsPos, true, 16, true, 1.0);
     EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
-    }
+
     EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
 
     // Binary String
     wd = A429BcdWord("11111111111111111111111111111111", digitsPos, true, 2);
     EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
-    }
+
     EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
     
     // Octal String
     wd = A429BcdWord("37777777777", digitsPos, true, 8);
     EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
-    }
+
     EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
 
     // Decimal String
     wd = A429BcdWord("4294967295", digitsPos, true, 10);
     EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
-    }
+
     EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
 }
@@ -67,9 +67,9 @@ TEST(A429BcdWordTest, DefaultInitBCDConstructorTest) {
     DigitsVec digitsPos = {std::make_pair(28, 25), std::make_pair(24, 21)};
     A429BcdWord wd = A429BcdWord(digitsPos, 1.0);
     EXPECT_EQ(wd.getLabelAsOctalString(), "000") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 000";
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_FALSE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 0";
-    }
+
     EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 29, 28, 11, 1.0), 0.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "00000000") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 00000000";
 }
@@ -83,10 +83,9 @@ TEST(A429BcdWordTest, SetterSetResolution) {
     A429BcdWord wd = A429BcdWord();
     EXPECT_DOUBLE_EQ(wd.resolution(), 1.0);
     std::vector<double> samples{0.1, 0.001, 0.5, 0.002547};
-    for (auto it = samples.cbegin(); it != samples.cend(); ++it)
-    {
-        wd.setResolution(*it);
-        EXPECT_NEAR(*it, wd.resolution(), 0.0001);
+    for (double sample : samples) {
+        wd.setResolution((float)sample);
+        EXPECT_NEAR(sample, wd.resolution(), 0.0001);
     }
 }
 
@@ -111,15 +110,15 @@ TEST(A429BcdWordTest, SetterSetDigitsPositions) {
 
 TEST(A429BcdWordTest, declareDigit) {
     A429BcdWord wd = A429BcdWord();
-    // case add one digit in a empty vector
+    // case add one digit in an empty vector
     wd.declareDigit(std::make_pair(28, 25));
     EXPECT_EQ(wd.digitsPositions().size(), 1);
 
-    // case add one digit to a non empty vector
+    // case add one digit to a non-empty vector
     wd.declareDigit(std::make_pair(24, 21));
     EXPECT_EQ(wd.digitsPositions().size(), 2);
 
-    // casse add a digit wich is already declared
+    // case add a digit which is already declared
     EXPECT_EQ(wd.digitsPositions().size(), 2);
 
     // case add a digit which have some bits superposed to another digit
@@ -235,7 +234,6 @@ TEST(A429BcdWordTest, Format6) {
     // same raw with a new resolution
     wd1.setResolution(0.1);
     EXPECT_NEAR(765.4, wd1.value(), 0.001);
-    
 }
 
 TEST(A429BcdWordTest, Format7) {
@@ -258,7 +256,6 @@ TEST(A429BcdWordTest, Format7) {
     // same raw with a new resolution
     wd1.setResolution(0.1);
     EXPECT_NEAR(123.4, wd1.value(), 0.001);
-    
 }
 
 TEST(A429BcdWordTest, Format8) {
@@ -282,7 +279,6 @@ TEST(A429BcdWordTest, Format8) {
     // same raw with a new resolution
     wd1.setResolution(0.01);
     EXPECT_NEAR(23.45, wd1.value(), 0.001);
-    
 }
 
 TEST(A429BcdWordTest, Format9) {
@@ -306,5 +302,4 @@ TEST(A429BcdWordTest, Format9) {
     // same raw with a new resolution
     wd1.setResolution(0.1);
     EXPECT_NEAR(123.4, wd1.value(), 0.001);
-    
 }

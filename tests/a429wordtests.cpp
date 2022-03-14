@@ -1,17 +1,15 @@
 #include <gtest/gtest.h>
-#include "../a429word.hpp"
+#include "../src/a429word.hpp"
 #include <cstdio>
 #include <algorithm>
 #include <bitset>
-#include <iostream>
-#include <sstream>
 
 TEST(A429WordTest, DefaultConstructorTest) {
     A429Word wd = A429Word();
     EXPECT_EQ(wd.getLabelAsOctalString(), "000") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 000";
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_FALSE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 0";
-    }
+
     EXPECT_DOUBLE_EQ(wd.getBnrValue(true, 29, 28, 11, 1.0), 0.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "00000000") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 00000000";
 }
@@ -19,9 +17,9 @@ TEST(A429WordTest, DefaultConstructorTest) {
 TEST(A429WordTest, IntegerConstructorTest) {
     A429Word wd = A429Word(4294967295, true);
     EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "get: " << wd.getLabelAsOctalString() << " instead of 377";
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
-    }
+
     EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
 }
@@ -30,36 +28,36 @@ TEST(A429WordTest, StringConstructorTest) {
     // Hexadecimal String
     A429Word wd = A429Word("FFFFFFFF", true, 16);
     EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
-    }
+
     EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
 
     // Binary String
     wd = A429Word("11111111111111111111111111111111", true, 2);
     EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
-    }
+
     EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
     
     // Octal String
     wd = A429Word("37777777777", true, 8);
     EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
-    }
+
     EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
 
     // Decimal String
     wd = A429Word("4294967295", true, 10);
     EXPECT_EQ(wd.getLabelAsOctalString(), "377") << "getLabelAsOctalString() returned " << wd.getLabelAsOctalString() << " instead of 377";
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
-    }
+
     EXPECT_DOUBLE_EQ(wd.getBnrValue(false, 29, 28, 11, 1.0),  262143.0);
     EXPECT_EQ(wd.getLabelAsBinaryString(true), "11111111") << "getLabelAsBinaryString(true) returned " << wd.getLabelAsBinaryString(true) << " instead of 11111111";
 }
@@ -87,7 +85,7 @@ TEST(A429WordTest, SetterRawValue) {
     EXPECT_EQ(wd.ssm(), 0);
     EXPECT_EQ(wd.parity(), 0);
     // out_of_range exception
-    // This exception cannot be tested because the compiler performs an implicitly conversion from long to int which changes the value
+    // This exception cannot be tested because the compiler performs an implicit conversion from long to int which changes the value
     // EXPECT_THROW(wd.setRawValue(4294967296), std::out_of_range);
 }
 
@@ -132,7 +130,6 @@ TEST(A429WordTest, SetterSdi) {
 TEST(A429WordTest, GetterPayload) {
     A429Word wd = A429Word("ABCD2234", true, 16);
     EXPECT_EQ(wd.payload(), std::stoi("0101111001101001000", nullptr, 2));
-
 }
 
 TEST(A429WordTest, SetterPayload) {
@@ -229,22 +226,21 @@ TEST(A429WordTest, getLabelAsBinaryString) {
 TEST(A429WordTest, getBit) {
     A429Word wd = A429Word("FFFFFFFF", true, 16);
     // all bits set to 1
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
-    }
+
     // all bits set to 0
     wd.setRawValue(std::stoul("00000000", nullptr, 16));
-    for (int i=1; i<33; ++i) {
+    for (int i=1; i<33; ++i)
         EXPECT_FALSE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 0";
-    }
+
     // alternate between 0 and 1
     wd.setRawValue(std::stoul("AAAAAAAA", nullptr, 16));
     for (int i=1; i<33; ++i) {
-        if (i % 2 == 0) {
+        if (i % 2 == 0)
             EXPECT_TRUE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 1";
-        } else {
+        else
             EXPECT_FALSE(wd.getBit(i)) << "getBit(" << i << ") returned "  << wd.getBit(i) << " instead of 0";
-        }
     }
     // out_of_range exception
     EXPECT_THROW(wd.getBit(0), std::out_of_range);
@@ -433,15 +429,13 @@ TEST(A429WordTest, EqualityOperator) {
 TEST(A429WordTest, SubscriptOperator) {
     // CASE ALL BITS SET TO 1
     A429Word wd = A429Word("FFFFFFFF", true, 16, true);
-    for(int i=1; i < 33; ++i) {
+    for(int i=1; i < 33; ++i)
         EXPECT_TRUE(wd[i]);
-    }
     
     // CASE ALL BITS SET 0
     A429Word wd1 = A429Word("00000000", true, 16, true);
-    for(int i=1; i < 33; ++i) {
+    for(int i=1; i < 33; ++i)
         EXPECT_FALSE(wd1[i]);
-    }
 
     // out_of_range exception
     EXPECT_THROW(wd[0], std::out_of_range);
