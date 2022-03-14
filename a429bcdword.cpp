@@ -76,11 +76,13 @@ void A429BcdWord::resetDigitsConfig()
 double A429BcdWord::value() const
 {
     double tmp = 0.0;
-    for(size_t i=m_digitsPos.size()-1; i>=0; --i)
-    {
-        std::cout << i << std::endl;
+    size_t i = m_digitsPos.size() - 1;
+    while (true) {
         uint digitValue = getBitRange(m_digitsPos[i].first, m_digitsPos[i].second);
         tmp += digitValue * std::pow(10, (m_digitsPos.size() - (i+1)));
+        if (i == 0)
+            return tmp * m_resolution;
+        else
+            --i;
     }
-    return tmp * m_resolution;
 }
