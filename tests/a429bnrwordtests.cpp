@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../a429bnrword.hpp"
+#include "../src/a429bnrword.hpp"
 
 TEST(A429BnrWordTest, DefaultConstructorTest) {
     A429BnrWord wd = A429BnrWord();

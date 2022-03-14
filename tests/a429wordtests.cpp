@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../a429word.hpp"
+#include "../src/a429word.hpp"
 #include <cstdio>
 #include <algorithm>
 #include <bitset>

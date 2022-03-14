@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../a429bcdword.hpp"
+#include "../src/a429bcdword.hpp"
 #include <vector>
 
 TEST(A429BcdWordTest, DefaultConstructorTest) {
