@@ -10,6 +10,10 @@
 #define SSM_MASK 1610612736UL
 #define PARITY_MASK 2147483648UL
 
+#ifdef _WIN32
+    using ushort = unsigned short;
+    using uint = unsigned int;
+#endif
 
 /*!
  *
