@@ -8,6 +8,19 @@ project(${This} C CXX)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++ -lc++abi")
+
+option(BUILD_32bit "option to build library in 32bit environment" OFF)
+if(BUILD_32bit)
+    message("BUILD WITH 32BIT ENVIRONMENT")
+    set(CMAKE_C_FLAGS -m32)
+    set(CMAKE_CXX_FLAGS -m32)
+    # alternative to above lines
+#    add_compile_options(-m32)
+else()
+    message("BUILD WITH 64BIT ENVIRONMENT")
+endif(BUILD_32bit)
+unset(BUILD_32bit CACHE) # <---- this is important to update the cache with option value!!
 
 enable_testing()
 
