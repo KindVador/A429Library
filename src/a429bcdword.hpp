@@ -4,8 +4,6 @@
 #include "a429word.hpp"
 #include <vector>
 
-using ushort = unsigned short;
-using uint = unsigned int;
 using DigitConfig = std::pair<ushort, ushort>;
 using DigitsVec = std::vector<DigitConfig>;
 

@@ -10,8 +10,6 @@
 #define SSM_MASK 1610612736UL
 #define PARITY_MASK 2147483648UL
 
-using uint = unsigned int;
-using ushort = unsigned short;
 
 /*!
  *

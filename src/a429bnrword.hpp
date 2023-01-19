@@ -3,9 +3,6 @@
 
 #include "a429word.hpp"
 
-using ushort = unsigned short;
-using uint = unsigned int;
-
 class A429BnrWord : public A429Word {
 
 public:
