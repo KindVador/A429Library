@@ -31,9 +31,6 @@
 *.out
 *.app
 
-# submodules
-/3rdparty/
-
 # build directory or CMake build
 /build
 /cmake-build-debug
